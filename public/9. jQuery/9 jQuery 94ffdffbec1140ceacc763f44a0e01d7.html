@@ -1,0 +1,685 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>9. jQuery</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="94ffdffb-ec11-40ce-acc7-63f44a0e01d7" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">9️⃣</span></div><h1 class="page-title">9. jQuery</h1></header><div class="page-body"><p id="9b595e64-2cbb-4074-b1da-294719598d00" class="">
+</p><h1 id="55a9ca60-31d9-49e3-b93c-1be7abc789cf" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Including CDN (script):</span></mark></h1><p id="e35c1953-8d57-4679-b49e-0c749743c0d8" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d83debf2-07a3-412c-86dd-27c59a7fc8e6"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>when we try to include the CDN of jQuery, the most recommended one is google CDN as it is by google, when we already loaded a website the jQuery will be saved in the browser as cache and which makes it faster to load the webpage. </strong><mark class="highlight-teal"><strong>ALWAYS PLACE THE jQuery CDN AT THE BOTTOM OF BODY TAG BUT ABOVE THE Java Script inclusion.</strong></mark></div></figure><div id="b922e0aa-a862-49ef-bf0d-8537df03d50b" class="column-list"><div id="894cfdf9-7ac2-46ee-88db-452bd7ab55e4" style="width:56.25%" class="column"><figure id="62fcffc9-a027-43bf-8df5-d533cb18a75b" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled.png"><img style="width:2253px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled.png"/></a></figure></div><div id="fc95e67f-8504-4a78-91ba-43c64d0fb4f4" style="width:43.74999999999999%" class="column"><figure id="a5839ce3-2f7a-4437-a443-1b1194d7dc46" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%201.png"><img style="width:1415px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%201.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6a18930c-6e5f-4d2f-87fc-7297138bfd0c"><div style="font-size:1.5em"><span class="icon">🔑</span></div><div style="width:100%"><strong>It is not included because, the before the loading of jQuery CDN, the JS file tries to access the parts of jQuery which is not defined.</strong></div></figure><p id="ad0b9a7b-811b-4c90-8f7d-5a41d9221a64" class="">
+</p><div id="57699496-430e-4599-9a02-ccb58c8a6295" class="column-list"><div id="37506475-6c48-426b-8699-d38e2956d665" style="width:62.5%" class="column"><figure id="36008bf7-b917-41e1-89b7-cb7ba4f266f2" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%202.png"><img style="width:2284px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%202.png"/></a></figure></div><div id="155e5217-9b0b-4024-8470-30476cd292ed" style="width:37.49999999999999%" class="column"><p id="6f23e127-f4e6-4354-ae44-6697477c340d" class="">
+</p><figure id="35f5802f-f1b2-41cf-954d-7efffeb95bb8" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%203.png"><img style="width:816px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%203.png"/></a></figure><p id="3344121c-a5b8-4e51-9cbb-fae6c4fdd1ad" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="33b20dcb-6700-4446-b671-c32b169b4598"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><strong>Both the </strong><strong><code>jQuery</code></strong><strong> and the </strong><strong><code>$</code></strong><strong> will do the same thing</strong></div></figure><p id="bae792a0-622e-468b-b68c-055e2c3057c1" class="">
+</p></div></div><hr id="b1f8b7f5-143f-4e21-b8ab-4f451fff9fc8"/><p id="63429838-0f22-4f1c-b96f-c13f0e1b0d50" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2355c617-946e-4edd-8670-abc5fbb081d0"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>If the </strong><code><strong>script</strong></code><strong> tags are included in the </strong><code><strong>&lt;head&gt;</strong></code><strong> tag, then we have to check whether the jQuery CDN is loaded in the JS file before we use it, else it will not to included.</strong></div></figure><div id="7b311aec-5ab4-4213-8248-1372882f8320" class="column-list"><div id="d042d5e3-698a-400a-a2a8-787672814e79" style="width:62.5%" class="column"><figure id="3f0d70d4-53ba-420d-b1f5-58afa6f14d99" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%204.png"><img style="width:2225px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%204.png"/></a></figure></div><div id="3e7634b0-8397-46aa-98a2-829e13048e0c" style="width:37.49999999999999%" class="column"><p id="39e6a30b-6748-4e0c-9a17-8d5fa1dab4d0" class="">
+</p><p id="3a91c0da-d10b-4eea-bfa3-e367e797cb2e" class="">
+</p><figure id="5788189e-e024-4391-86eb-3a3655727e17" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%205.png"><img style="width:830px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%205.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4ed1f8ac-8047-4205-b6c7-9d91eeebcc09"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><span style="border-bottom:0.05em solid"><strong>note</strong></span><strong>: the colour of the h1 is not changed.</strong></div></figure></div></div><div id="99a7efba-fd36-48e4-9e83-c5f1e0d201e8" class="column-list"><div id="e8ff3ac2-cf00-43c7-9252-4d997264c731" style="width:50%" class="column"><figure id="447bf42d-c4f4-4766-9bce-86a032e454a7" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%206.png"><img style="width:952px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%206.png"/></a></figure></div><div id="8c77dc5a-88fc-406a-9a4f-de32853c514c" style="width:50%" class="column"><figure id="dac010e8-79a6-4649-84b1-2c40d19cda85" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%207.png"><img style="width:934px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%207.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="089b7a67-d929-4a8c-94b4-a668ca41005a"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>Here, it will wait until the CDN is loaded and will execute the jQuery. but this is not at all needed if we include it at the bottom of the </strong><strong><code>&lt;body&gt;</code></strong><strong> tag.</strong></div></figure><hr id="14157f67-5cb0-4e09-b5b2-2b451c83d695"/><h1 id="b7e54e09-ac31-470a-81da-f2f92d5a851e" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Minifying code:</span></mark></h1><p id="6a31d571-6bb1-4883-8216-2010259ea1f9" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="90fc64a9-6315-4f8c-9059-d5936ebbe64d"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>All the CSS and JS code will be minified to reduce space by getting rid off spaces, indentation and which in turn reduce the space and makes it easier to load by the browser. Every library that we use like Bootstrap and jQuery will have two file one is in human readable formatting and the other one with the minified version.</strong></div></figure><figure id="4ec388ea-d268-48c5-b852-908e9295750e" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%208.png"><img style="width:768px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%208.png"/></a></figure><hr id="e3f4a17d-9ab6-4d66-8aba-c2bdbc7dc3f1"/><h1 id="8e55a57a-fe2c-436a-8ce3-d8f6ffe6b539" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Selecting Elements in jQuery:</span></mark></h1><div id="d96674fe-6618-479e-93a6-f5a033e066f8" class="column-list"><div id="99b21fce-1ab5-431a-be14-13aa21b2e90e" style="width:50%" class="column"><figure id="beff8d10-aea4-4fc1-a7d5-b10e9d3480d2" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%209.png"><img style="width:673px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%209.png"/></a></figure></div><div id="80e6b5df-72c1-4437-bc67-a7fccbbbf380" style="width:50%" class="column"><figure id="7eade764-4ed3-43d1-8acc-b9af29436282" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2010.png"><img style="width:830px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2010.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a2a05b5e-b144-4d43-90a5-8d173d246759"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Both the </strong><strong><code>queySelector</code></strong><strong> and </strong><strong><code>querySelectorAll</code></strong><strong> can be replaced with just the </strong><strong><code>$</code></strong></div></figure><hr id="a5b7c086-96b7-4a30-b788-e57b6c6c2086"/><h1 id="a5012e7d-4aa6-44dc-af83-808890a7074d" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Manipulating Styles:</span></mark></h1><p id="cc4f01d0-a143-411f-93cb-fc9f0c003a8f" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="30a275fe-1c3e-4aa7-9293-3e560765227e"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>If the jQuery </strong><code><strong>css</strong></code><strong> method has one argument, it is getting the property and it acts as a set property if it has 2 arguments</strong></div></figure><div id="7137e08f-53b6-4139-9aa0-141d2cf1173d" class="column-list"><div id="b019fbfe-bb22-4fc3-8972-dd2548c9b8de" style="width:43.75%" class="column"><figure id="da30d065-b4fa-4ec3-84eb-7b214cc89951" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2011.png"><img style="width:784px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2011.png"/></a></figure></div><div id="498c03cc-6178-42fe-953f-d60dddd0d2a6" style="width:56.25%" class="column"><figure id="0d18bab3-8757-4295-b941-1cb835976d2a" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2012.png"><img style="width:840px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2012.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ee3f2689-b46b-4471-b2ba-63c7ad0d9899"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>The problem here is that we are changing the styling code in the jQuery file but it should be in CSS file.</strong></div></figure><div id="6e6d6e2f-7fc1-4ed8-a86f-beb511004d57" class="column-list"><div id="bccb5bba-72f3-4d8b-8d0b-ac5c0e346934" style="width:50%" class="column"><figure id="02fb85f4-f6cc-49be-adc2-a5f73777f217" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2013.png"><img style="width:783px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2013.png"/></a></figure></div><div id="0ccde258-6005-47b1-9375-d11ea64495c2" style="width:50%" class="column"><figure id="11f91d0a-f33d-4403-9e13-616c0207a46b" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2014.png"><img style="width:1009px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2014.png"/></a></figure><figure id="9ac060c3-c4f3-46ac-9107-aa8c4e1ce9ee" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2015.png"><img style="width:782px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2015.png"/></a></figure></div></div><hr id="3262121a-870f-45e3-8b7a-cdfac86ce6e5"/><div id="e5b1ca15-5ee7-423d-b1d9-15f64240cede" class="column-list"><div id="b9d17164-1cf3-443f-8950-c62b5e547075" style="width:56.25%" class="column"><figure id="4e3b60a8-a6bd-4688-b010-d18f017e7b66" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2016.png"><img style="width:834px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2016.png"/></a></figure><figure id="ec7f6257-669f-41bb-a178-d8c06b20d916" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2017.png"><img style="width:571px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2017.png"/></a></figure></div><div id="e78b33a0-5b3a-4379-a273-492fdb5b884a" style="width:43.75000000000001%" class="column"><figure id="81d862f8-5b88-4806-a9d0-2eefba58da46" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2018.png"><img style="width:834px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2018.png"/></a></figure></div></div><hr id="4a5a1f50-c9f5-48d8-9559-1a6721dfd23d"/><h1 id="242ce516-4769-44af-9460-2a953f2b4b4b" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Manipulating Text:</span></mark></h1><div id="1941e88d-e191-4917-835c-d5fb82d6a7ab" class="column-list"><div id="f737467b-c8ad-4dde-9263-a9a729946b5a" style="width:50%" class="column"><figure id="e40e83b7-a638-4d64-b94d-cafaf21fd8b5" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2019.png"><img style="width:964px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2019.png"/></a></figure></div><div id="33cf2998-ef94-4500-bf92-4b2993b3591d" style="width:49.99999999999999%" class="column"><figure id="d344a63a-24ca-43a4-b35a-1ea5abb6d487" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2020.png"><img style="width:1247px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2020.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b5389b96-8c14-4d0a-b249-a8ca9293d95b"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>The </strong><strong><code>.text()</code></strong><strong> method will replace the thing exactly the same.</strong></div></figure><div id="ce92668f-d0c0-4831-a37e-337592754dd2" class="column-list"><div id="a2c94b35-7f6b-4a99-9def-571410452460" style="width:43.75%" class="column"><figure id="294a626a-6e31-4709-a7bf-9d9b8b588025" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2021.png"><img style="width:1208px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2021.png"/></a></figure></div><div id="93b5a163-78b8-4595-b5d5-a62840a645f9" style="width:56.25%" class="column"><figure id="1c9daee4-a403-4561-90e3-2fd87e8c0d92" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2022.png"><img style="width:2019px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2022.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2271e868-81fb-4e89-a827-811a7e82f2fb"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>The </strong><strong><code>innerHTML</code></strong><strong> in JS is here just </strong><strong><code>html</code></strong><strong> and it applies the tags as well instead of just considering as text.</strong></div></figure><div id="bf84cbe0-9941-4a17-8735-54d009845496" class="column-list"><div id="5f080f97-838d-4ad2-a288-dd316341dc1c" style="width:50%" class="column"><figure id="b904edd5-6af7-40da-ba38-74285500a9d8" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2023.png"><img style="width:1149px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2023.png"/></a></figure></div><div id="09074e7a-c95e-4b31-8e75-cbe41fdf4ffd" style="width:50%" class="column"><figure id="027f9be4-9c26-458f-bade-d66abbd92d05" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2024.png"><img style="width:1178px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2024.png"/></a></figure></div></div><hr id="8563a7ca-46b9-4c2e-a6e9-b3a425a7beb3"/><h1 id="6c485936-e30c-4b51-b11a-0b64b2deb445" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Manipulating Attributes:</span></mark></h1><div id="522b7337-8ba7-418a-bc3a-bfdc72872fde" class="column-list"><div id="7b58d813-78ad-42f9-b62d-c1f207f650c3" style="width:56.25%" class="column"><figure id="f53eb8ce-285a-4cff-bf13-db4a9876b874" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2025.png"><img style="width:1095px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2025.png"/></a></figure></div><div id="e430dc64-e448-489d-bab9-4ab2d27013a5" style="width:43.75%" class="column"><figure id="495ffa21-7278-45d7-a225-7cad1d33c7ed" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2026.png"><img style="width:565px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2026.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="753e1492-7f4c-4562-a582-7522705ce967"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><code>.attr()</code> method is used to change or know the attributes of a particular element that includes a class as well.</div></figure><hr id="d9ad65c2-d40e-40dd-b738-86bbf1c47201"/><h1 id="0475528f-8221-482c-a3d0-e6abb3e507f0" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Adding event Listener:</span></mark></h1><p id="5972f6fc-0dce-434e-ae3d-c8a786e3c572" class="">
+</p><div id="727f3fc0-c7dd-4d1f-b7d2-42163406e7b8" class="column-list"><div id="808461ac-0832-4933-b4aa-202ba64282e7" style="width:50%" class="column"><figure id="3ed19313-15da-4a46-9d4e-0852c53d664c" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2027.png"><img style="width:930px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2027.png"/></a></figure></div><div id="88afbdd1-5b8c-4c46-82fc-7cdcb935d2c9" style="width:50%" class="column"><figure id="ead6921f-ccdd-4259-901e-b650936956fd" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2028.png"><img style="width:1904px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2028.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="56ca15df-3b8d-417c-b021-637892e83d0c"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>To apply this to all the element we don’t even need to use a loop, we can just include it easily with the same code.</strong></div></figure><div id="7b28d928-fe44-44c7-8212-5db0f8d3e5db" class="column-list"><div id="df2f1920-ccb0-49d4-9bb9-f3e7c270a278" style="width:62.5%" class="column"><figure id="b10cfbbb-5c18-440f-b30b-d04ccaebd913" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2029.png"><img style="width:1533px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2029.png"/></a></figure></div><div id="c58cc490-df4d-4f65-9c4f-3f7d0d279d00" style="width:37.49999999999999%" class="column"><figure id="93a177ed-5ffa-4522-93ad-08c82088ba41" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2030.png"><img style="width:653px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2030.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cb8eca35-1cef-4091-b399-5b34e85a412d"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>The above(left) JS code can be converted to the right jQuery code as such</strong></div></figure><div id="464d1fdd-c33c-4ee3-b285-a7ae3ca653af" class="column-list"><div id="acf44cfd-ceba-498c-a8f5-e900617d2957" style="width:50%" class="column"><figure id="8ae8559a-ba77-4318-a315-5fa8de07c724" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2031.png"><img style="width:912px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2031.png"/></a></figure></div><div id="d57b6d35-88f5-4b01-b826-79b74310d084" style="width:50%" class="column"><figure id="50d68a84-3489-47a7-b893-7c29df1c33e3" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2032.png"><img style="width:2675px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2032.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="40855142-8fa3-4eb2-84cc-91aa839e9d47"><div style="font-size:1.5em"><span class="icon">🛠</span></div><div style="width:100%"><strong><code>.on</code></strong><strong> method is used to make things look a lot like JS</strong></div></figure><div id="aabc5446-de10-414c-8420-4ad3d989e2a3" class="column-list"><div id="2c9fe993-8f00-415e-aa5b-74d02184da0f" style="width:50%" class="column"><figure id="eb487859-1d49-4ac4-95ed-6a6094a69add" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2033.png"><img style="width:1046px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2033.png"/></a></figure></div><div id="d4e64987-99fe-491e-9b6f-f973869c8543" style="width:50%" class="column"><figure id="185eba2f-e757-4bf5-a68d-834b5dccd865" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2034.png"><img style="width:2719px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2034.png"/></a></figure></div></div><hr id="503bbef6-9de1-4929-b2ac-d1afc647cb09"/><h1 id="0841be64-5a74-4e7d-9596-842af904758c" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Adding or Removing Elements:</span></mark></h1><p id="bb324142-4e83-48df-81d5-30dc43f74954" class="">
+</p><div id="af23c21f-5a07-4e32-9678-980f5d02424d" class="column-list"><div id="fb468f53-04d9-4b80-8823-14f05e768639" style="width:50%" class="column"><figure id="ef22554e-7500-4695-9082-653f2f3c42b6" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2035.png"><img style="width:2832px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2035.png"/></a></figure><figure id="ca9cf28e-53ba-4445-adc3-ae8c1f675f6d" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2036.png"><img style="width:3044px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2036.png"/></a></figure></div><div id="0f6846c6-c963-4279-968b-4b48133bf194" style="width:50%" class="column"><figure id="3c885689-c416-4968-b7f6-68a330edcfe6" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2037.png"><img style="width:2768px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2037.png"/></a></figure><figure id="6fdbe2a7-fce5-484d-87e7-486c9d0b1696" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2038.png"><img style="width:2976px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2038.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="340b8d42-4e63-406d-95b3-97fe79a9b7b8"><div style="font-size:1.5em"><span class="icon">🛠</span></div><div style="width:100%"><strong>The adding of HTML element in jQuery is so simple and the position they are being added are shown below.</strong></div></figure><div id="eb03e475-92eb-4e16-94a9-225ba3887382" class="column-list"><div id="57d039fe-9af1-4409-a367-0b667ec38b23" style="width:37.5%" class="column"><figure id="a395a079-1931-4116-8e15-428e96a1c2d3" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2039.png"><img style="width:567px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2039.png"/></a></figure></div><div id="817db99a-6880-4672-94ef-de6c2cca7759" style="width:62.5%" class="column"><p id="d6e7aaa0-6698-4458-af19-87d71b9e363b" class="">
+</p><figure id="503e16d8-c2f6-4a42-8fd5-c15439e310b6" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2040.png"><img style="width:1473px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2040.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="24f578e4-911c-436e-972a-1222f8443318"><div style="font-size:1.5em"><span class="icon">🛠</span></div><div style="width:100%"><strong>Removing the elements is also easy with jQuery by just selecting the element and tap in </strong><strong><code>.remove()</code></strong><strong> method.</strong></div></figure><div id="2d1d1383-e053-493b-948f-358d84ce84c6" class="column-list"><div id="2d386ab0-daab-49fc-b973-010b78716d13" style="width:75%" class="column"><figure id="befce3a2-1bd6-4dd5-9169-72a8547bd4fe" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2041.png"><img style="width:1228px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2041.png"/></a></figure></div><div id="d7eccd7e-902f-48f2-a294-1afe5758a1ee" style="width:24.999999999999996%" class="column"><figure id="6a98adbe-e2ec-44a4-b215-7846920b421a" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2042.png"><img style="width:648px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2042.png"/></a></figure></div></div><hr id="1f91ec75-39d9-49c3-b2a3-151d3af71eb8"/><h1 id="dc7faf3a-fcef-4fa2-82d8-4d278a9bed45" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Website Animations:</span></mark></h1><figure id="74b2cc40-4de6-44e8-b427-72c61f43dfa0" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2043.png"><img style="width:2168px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2043.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2f222d99-b0e9-4e0c-a40d-52da0c7b159d"><div style="font-size:1.5em"><span class="icon">🛠</span></div><div style="width:100%"><code><strong><mark class="highlight-orange"><a href="https://www.w3schools.com/jquery/jquery_ref_effects.asp">https://www.w3schools.com/jquery/jquery_ref_effects.asp</a></mark></strong></code></div></figure><h2 id="08dd262f-d89c-4842-b58e-573958bf048b" class=""><mark class="highlight-teal"><code>.animate()</code></mark><mark class="highlight-teal">:</mark></h2><p id="ade9d469-c936-425f-8664-f766e48194f9" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1b483d82-658e-418b-b0e8-e11d1ce4859c"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Remember that the </strong><strong><code>animate()</code></strong><strong> method only works for the CSS properties that has a numeric value and won’t work for properties that has text like colour</strong></div></figure><div id="88ee3a50-19c9-43dd-8ae3-ee09bfb853ab" class="column-list"><div id="a019c96e-c17d-434b-acd5-bf9e6ff805cc" style="width:62.5%" class="column"><figure id="0babb1d3-3788-4cbb-877b-db3f609b8948" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2044.png"><img style="width:1025px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2044.png"/></a></figure></div><div id="4ccc47d5-db32-4b2e-a002-2b369203d4fe" style="width:37.50000000000001%" class="column"><figure id="f3b69f83-1a46-4540-894a-399b004b378e" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2045.png"><img style="width:1247px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2045.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="206c0e1f-658f-437e-9469-70e1e4fa496e"><div style="font-size:1.5em"><span class="icon">🔑</span></div><div style="width:100%"><strong>We can also bundle more effects together by stacking them together with a </strong><strong><code>.</code></strong></div></figure><figure id="fdea2b0b-b8a7-4a4e-b4b2-241e0b71146f" class="image"><a href="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2046.png"><img style="width:1128px" src="9%20jQuery%2094ffdffbec1140ceacc763f44a0e01d7/Untitled%2046.png"/></a></figure><hr id="85dee62f-0d5f-4906-a0e8-e8644a93bcd0"/><p id="68c84813-5f19-4c83-8880-2c5bff0b45c8" class="">
+</p></div></article></body></html>

@@ -1,0 +1,691 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>11. Express.js with Node.js</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="55d247e5-8162-4e25-b543-d6a520b6c19e" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="https://cdn-icons-png.flaticon.com/512/6912/6912813.png"/></div><h1 class="page-title">11. <strong>Express.js with Node.js</strong></h1></header><div class="page-body"><p id="f6cfc1a8-3f87-4550-a98b-70010805b17e" class="">
+</p><h1 id="9cec5e76-35f8-49e4-a1f2-12ffc10a1f41" class=""><strong><mark class="highlight-blue"><span style="border-bottom:0.05em solid">What is Express.js:</span></mark></strong></h1><p id="cf3bbf5d-3bfa-46a9-9dfe-ac905caac65b" class="">
+</p><figure id="adb1a8d2-b28e-47a0-9b46-60994bdddcb9" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled.png"><img style="width:384px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e3a98dc1-a2f0-4d40-9946-3042eeb1d238"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong><code>Express</code></strong><strong> is also a framework like </strong><strong><code>jQuery for JS</code></strong><strong> but it is for </strong><strong><code>Node.js</code></strong><strong> and it is simply a chunk of code that has been written by someone else and we will be using it to reduce the repetition and size of the code. It is the highly used framework for </strong><strong><code>Node.js</code></strong></div></figure><hr id="6482751e-7996-4009-a790-8f4a42867904"/><h1 id="51950621-034d-4ba6-aace-543c486d25fb" class=""><strong><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Installing Express.js:</span></mark></strong></h1><p id="96e95112-be01-42b7-895c-e479d81ca5dd" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="83865521-9c17-4b48-88ca-178c094362e8"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>Use the command </strong><strong><code>npm install express</code></strong><strong> to install express to your project and you can see that the dependency gets added.</strong></div></figure><div id="4311da42-0488-4088-9b10-9f87938c92af" class="column-list"><div id="57b8b30b-b29a-434b-9650-900fa3df703b" style="width:62.5%" class="column"><figure id="6c51fada-4d91-4362-a360-e6d88083b96d" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%201.png"><img style="width:1340px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%201.png"/></a></figure></div><div id="2c85cbef-3c95-4a91-a163-a7657be62c13" style="width:37.49999999999999%" class="column"><figure id="a85c98b3-4d92-4b4f-bdf9-e9e95776dd06" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%202.png"><img style="width:585px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%202.png"/></a></figure></div></div><hr id="425e53bc-523c-4062-93fa-febcb86b5f27"/><p id="e1fc7e3f-fa4c-4e76-8b79-e8a12321d229" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2faef3dc-0131-4b3d-b5f9-4a39f5cbe7ff"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>Now, we are setting the server to lister to port [channel that we tuned it to] 3000 but it is not working properly as it looks like it got hanged.</strong></div></figure><div id="b78b6ece-b23a-4594-a1d4-95480c347746" class="column-list"><div id="10d3e6ac-8ee9-4d6d-9ad1-919f43e26576" style="width:37.5%" class="column"><figure id="d78bbbf2-a337-4b1a-86d2-dd868968b4c3" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%203.png"><img style="width:954px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%203.png"/></a></figure></div><div id="f597e48a-5869-40d1-8254-d47d0a13c1d5" style="width:62.5%" class="column"><figure id="e7c60e56-69c4-4704-99df-fa1c4db994f3" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%204.png"><img style="width:1370px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%204.png"/></a></figure></div></div><div id="2294c573-e38f-4819-87da-96ae52cc7a9b" class="column-list"><div id="d5ce5caf-6153-4e2c-a038-b388421a8810" style="width:37.5%" class="column"><figure id="e0aff8b8-355a-4975-a808-fdd6d89e1ced" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%205.png"><img style="width:1093px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%205.png"/></a></figure></div><div id="febf7502-4b97-4e01-89f0-b8f461ede4aa" style="width:62.5%" class="column"><figure id="a8ee7d7c-0b24-481b-94d9-3882f192d398" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%206.png"><img style="width:1362px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%206.png"/></a></figure></div></div><figure id="542f8c96-e0ec-4905-a997-0084e144e0a2" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%207.png"><img style="width:768px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%207.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c90973c6-1e2c-425f-9bb4-0ffe03e72319"><div style="font-size:1.5em"><span class="icon">🔑</span></div><div style="width:100%"><strong>This is getting error as browser is not getting anything back when it gives a request to that particular channel.</strong></div></figure><hr id="c8b4bda7-1f74-4d44-92d8-6663fb039014"/><p id="efe1dc6d-2763-42ad-8b35-758017d9763a" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3095c2ad-f22d-4fae-add5-82a70efd8674"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong><a href="http://localhost:3000"><code>localhost:3000</code></a></strong><strong> is the equivalent of </strong><strong><a href="http://www.google.com/"><code>www.google.com/</code></a></strong><strong> as they both act as home page or root.</strong></div></figure><div id="f1026c14-5216-4fe5-a528-ea9c4b83256b" class="column-list"><div id="c7cc4636-ac9c-4901-982d-a2678699fcf7" style="width:50%" class="column"><figure id="081d7cbc-6977-4abd-a05e-87b8344f2d05" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%208.png"><img style="width:1165px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%208.png"/></a></figure></div><div id="4cc43e45-cc01-4256-abeb-cd721da80e71" style="width:50%" class="column"><figure id="6ed2db49-9eb3-462b-8d1b-73514b2451a9" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%209.png"><img style="width:2311px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%209.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7305695f-264f-49f4-af30-67151df0a1e2"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>[</strong><strong><mark class="highlight-teal">’/’ refers to the root or home</mark></strong><strong>] When we try to console log the parameter </strong><strong><code>req</code></strong><strong> ⇒ request, we get a whole bunch of information about the request from the browser, but still the browser will show error as we are still not sending anything to the browser.</strong></div></figure><div id="b66421cf-e707-4b14-953b-f6ef77feef56" class="column-list"><div id="51de38b3-6cc1-43d1-9029-e7f779858352" style="width:50%" class="column"><figure id="38ede865-e0ae-4db1-9f22-51e1b55daaa8" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2010.png"><img style="width:1120px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2010.png"/></a></figure></div><div id="ae1e5df4-b700-4199-a2de-c44f1f7299a1" style="width:50%" class="column"><p id="42035791-28b6-45f1-9d88-78d812a97928" class="">
+</p><p id="76f03754-8392-416f-86e3-183d3adb2b80" class="">
+</p><p id="0ab12f7d-c8bc-40b6-b128-cb0052248175" class="">
+</p><figure id="16908506-e9f8-4212-a104-eeaf46ca26bd" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2011.png"><img style="width:1703px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2011.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5e85f650-9abf-4721-a9bb-7ff7e9aaf4ba"><div style="font-size:1.5em"><span class="icon">🛠</span></div><div style="width:100%"><strong>Now, we have sent a normal text to the browser when it requests to the server, we can even send </strong><strong><code>HTML</code></strong><strong> to the browser back when requested. The basic working of a browser is that it sends request to the servers and the server will send them </strong><strong><code>HTML, JS, CSS</code></strong><strong> and it compiles everything as one and shows us.</strong></div></figure><div id="064cfa0a-740e-4036-ab78-67f6e4ccd958" class="column-list"><div id="9d88a2b3-41d9-4e1e-9c70-f5f838c4f3a0" style="width:50%" class="column"><figure id="e4c8f578-0c14-4e47-80f9-3390aa47396d" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2012.png"><img style="width:1031px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2012.png"/></a></figure></div><div id="a27e74c4-f1c5-4afa-bbea-005deaf2ff32" style="width:50%" class="column"><figure id="a679676b-eacb-40ca-9942-a277ea0e524e" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2013.png"><img style="width:1715px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2013.png"/></a></figure></div></div><hr id="1b238ed9-b75a-4fbc-8bf3-1f33864922e2"/><h1 id="078e840a-e22c-4b13-8add-443628f3ed69" class=""><strong><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Working with Routes:</span></mark></strong></h1><p id="4926ed22-bb27-4339-a97e-b02bb343b19a" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="75cb0186-68d1-4dad-afc0-cf0f8abae437"><div style="font-size:1.5em"><span class="icon">🛠</span></div><div style="width:100%"><strong>A route is a page where we would like to take the browser to for </strong><span style="border-bottom:0.05em solid"><strong>example</strong></span><strong>: </strong><code><strong>localhost:3000/</strong></code><strong> is a route and </strong><code><strong>localhose:3000/about</strong></code><strong> is a route.</strong></div></figure><div id="9ce25e11-97e8-43c0-bd29-b913027307ee" class="column-list"><div id="fc2d5ab5-6cab-4ead-a983-2e0a6b084c0b" style="width:56.25%" class="column"><figure id="c96e25a0-8535-4d8b-b13c-b933c97ec1f9" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2014.png"><img style="width:1636px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2014.png"/></a></figure></div><div id="5b52ef9f-8273-45ea-b0a4-621a2eaabc96" style="width:43.74999999999999%" class="column"><figure id="41d66932-631a-4595-ad79-0159c13abbf0" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2015.png"><img style="width:1264px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2015.png"/></a></figure><figure id="76afca2c-b878-428a-92bb-272dfcc4f7e3" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2016.png"><img style="width:1259px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2016.png"/></a></figure><figure id="b330ed05-ce11-41e7-8ec2-515a4a74e44b" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2017.png"><img style="width:1201px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2017.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="56a3b2c2-16a1-4f27-b1d8-76dc863da3cc"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>It is a good practice to use </strong><strong><code>nodemon</code></strong><strong> which will take care of automatically restarting the server once it detects a chance made to it, to install it we just need to use the command: </strong><code><strong>npm install -g nodemon</strong></code><strong> and it can be installed inside any directory it will reflect to all the projects. To run the server we need to use the command: </strong><code><strong>nodemon server.js</strong></code><strong> .</strong></div></figure><figure id="28766715-8713-45eb-b10a-5d11360ea1f9" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2018.png"><img style="width:672px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2018.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="df3de607-7a84-4428-bb03-65e1be996144"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>The moment I make a change, the server gets restarted automatically.</strong></div></figure><hr id="cd5ae889-81df-45c8-aea6-f6843f1ce6f6"/><h1 id="f7ffa5af-cd07-4b30-a6a5-23e9469a6d3d" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Creating a Web application:</span></mark></h1><p id="d10349b7-6935-4771-bc34-14ed783428b6" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="08e8fb10-5ee2-494b-b848-9547c57c8ac7"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>The main difference is that in a web application we run every calculation and logic in the server and not show the code to the client.</strong></div></figure><h2 id="f1ec3eb7-33cc-465c-81f1-eb2945935a04" class=""><mark class="highlight-teal"><code>SendFile():</code></mark></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="081b3bce-9757-4fbf-a43d-843311030b90"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>To send a </strong><strong><code>HTML</code></strong><strong> file to the browser on request, we can’t use send method, instead we can use </strong><strong><code>sendFile()</code></strong><strong> method which takes the location of the file that is needed to the give back to the client. But as we know that in a server the directory can be at any location. So using </strong><mark class="highlight-purple"><strong><code>__dirname</code></strong></mark><strong> will always give the current working directory’s path wherever we are.</strong></div></figure><div id="3b8c078f-bdec-4e09-8c44-31ec3f0b889e" class="column-list"><div id="7a84e89d-238c-40c2-beab-0e8c1f967f79" style="width:56.25%" class="column"><figure id="2b60146f-d0f5-435e-ac62-7878cc237626" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2019.png"><img style="width:1193px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2019.png"/></a></figure></div><div id="834800df-8642-42ae-82f7-fa4d8227804e" style="width:43.75%" class="column"><figure id="88982c15-c768-41c1-9035-b6ea51762903" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2020.png"><img style="width:1731px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2020.png"/></a></figure></div></div><figure id="812de033-cfb2-4627-90c9-4813378e443a" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2021.png"><img style="width:480px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2021.png"/></a></figure><figure id="e3aaadfa-cae1-4128-be59-231d3c6d683b" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2022.png"><img style="width:3200px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2022.png"/></a></figure><p id="595d5d99-d000-4a46-ba73-8058036bb6cc" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1c1ffc9e-4e8a-4c75-8375-c5398a2005f1"><div style="font-size:1.5em"><span class="icon">🔒</span></div><div style="width:100%"><strong>When we try to give input and click submit we will get error 404, here, the reason is that in the HTML form we mentioned that the method is </strong><code><strong>post</strong></code><strong> and the action (destination) is </strong><code><strong>index.html</strong></code><strong>  but it should be to the server </strong><code><strong>“/”</strong></code><strong> or if we didn’t mention the action it is default pointing to the server. so lets change it.</strong></div></figure><p id="01b8877f-d3a4-468d-89a7-c4a458c1d1a0" class="">
+</p><div id="e97daf7d-42f1-4949-b7e5-fd77e0cc1cb2" class="column-list"><div id="ad10afed-0c16-4d27-8d7c-a5f845462737" style="width:56.25%" class="column"><figure id="85daaa8f-241c-47e8-9248-ccad07859aee" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2023.png"><img style="width:624px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2023.png"/></a></figure></div><div id="74fc3a47-8089-4836-a60f-24732cfb124a" style="width:43.74999999999999%" class="column"><figure id="f904b919-d180-40d6-a7a3-8e7a43df964b" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2024.png"><img style="width:1970px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2024.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4980a142-1017-4059-8efc-171b34fd5c60"><div style="font-size:1.5em"><span class="icon">🔒</span></div><div style="width:100%"><strong>Even now, we get an error says : </strong><code><strong>cannot post /</strong></code><strong> but we can see that the data is visible in the network section. This is because we are not having any code to handle the post request.</strong></div></figure><p id="d692cec6-6a24-4374-8db9-cb780bb4bf1e" class="">
+</p><div id="62c65375-ea33-4191-95fa-812f6cf4901a" class="column-list"><div id="b1966312-0c26-46d4-a205-e6f70c6edaa3" style="width:50%" class="column"><figure id="fb33738d-8952-4bdf-80ba-70a90b372471" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2025.png"><img style="width:1192px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2025.png"/></a></figure></div><div id="ba43adac-5bcb-4821-81cb-35d8f0dfe46f" style="width:50%" class="column"><figure id="bf61cdb6-8a5a-43c6-b8e4-434c8ee142c8" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2026.png"><img style="width:576px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2026.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ea9d321d-9136-4477-bfb5-26354d85d405"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><strong>Now, we don’t get any error and the status code is </strong><code><strong>200</strong></code><strong> which means it is good and we are getting the response from the server for the post request.</strong></div></figure><p id="9b9f09b9-b038-439d-ba3a-570d80e45d95" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="661ccf7c-cd1a-4590-856b-095e51016ff5"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong>But the main thing is that we need to get the data from the form so we need to install a package from </strong><strong><code>npm</code></strong><strong> called </strong><strong><code>body-parser</code></strong><strong> </strong></div></figure><div id="01fcdebb-ad28-4328-b90a-8d7d14fc046b" class="column-list"><div id="7ff412be-d311-4112-93e1-63c4b4d25104" style="width:56.25%" class="column"><figure id="87683e22-5074-4dab-86cb-526cb65df90d" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2027.png"><img style="width:991px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2027.png"/></a></figure></div><div id="8348467d-bedc-4870-b5e3-8c6e3bd852bf" style="width:43.75%" class="column"><figure id="a9cd9997-ce81-4859-b8b7-5379a30ed8bb" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2028.png"><img style="width:624px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2028.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="680274d1-86aa-471f-815e-95069f20147e"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong><code>body-parser</code></strong><strong> can work with express itself and it has different modes like the </strong><code><strong>text</strong></code><strong> will give the data as </strong><code><strong>text</strong></code><strong> and the </strong><code><strong>json</strong></code><strong> will give it as </strong><code><strong>json</strong></code><strong> and the </strong><strong><code>urlencoded</code></strong><strong> which we are going to be using will give in a way that we can access it like attributes or variables.</strong></div></figure><div id="9468b048-5f12-4cf5-9267-a98f6c7c2228" class="column-list"><div id="d1acea36-057e-4876-927d-5f612f0a05c1" style="width:50%" class="column"><figure id="f063975d-49e6-491d-adb5-a6166f9311f4" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2029.png"><img style="width:1309px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2029.png"/></a></figure></div><div id="ae78ae3b-e424-4cff-8357-4d9fd4fe0c9d" style="width:50%" class="column"><p id="4b17bf7d-eec1-48c0-9ad1-f3ed4f452d0c" class="">
+</p><p id="ecd4515e-4b76-49e3-98b6-d4dd2353c778" class="">
+</p><p id="2c55a9e7-b88e-408c-933d-02d97361558d" class="">
+</p><figure id="269ce357-764a-46ae-8b40-adf93914b76c" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2030.png"><img style="width:863px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2030.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2b9172a3-df0c-41de-b588-d8fe62a38abe"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>Therefore, we can access the variable by using </strong><strong><code>.</code></strong><strong>  </strong></div></figure><p id="19eac93a-d165-4308-8184-33f89d1baef0" class="">
+</p><p id="90387ff5-341f-4da9-8020-14ec7ca749f7" class="">
+</p><p id="4ed992c3-3425-487a-9375-b73b0a288f19" class="">
+</p><p id="829fcf55-4c4d-427c-8034-622bea54afe0" class="">
+</p></div></div><div id="1e791c7f-7fc9-4f7c-95e4-821e104f29c8" class="column-list"><div id="aee8b440-b4e5-4567-b8a1-96015cc9a475" style="width:50%" class="column"><figure id="b8e4c77f-97b7-4e9b-b5ff-71dcc2dd2c72" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2031.png"><img style="width:1631px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2031.png"/></a></figure></div><div id="3fe6cc38-8ce5-4a1d-a1b6-a531b2139ec4" style="width:50%" class="column"><figure id="947e4191-b4c2-4cbf-abae-da347b10b0d6" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2032.png"><img style="width:1150px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2032.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0c2581bc-bb3f-4b47-8114-cae85c03ed7f"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>Notice that the answer is added up like adding a two string because the body-parser will return as text</strong></div></figure></div></div><div id="c6486a0d-430c-4008-9c95-73e542ed1878" class="column-list"><div id="027550fc-00f8-40ea-8041-16887234a281" style="width:50%" class="column"><figure id="350b4dee-b6d2-4d50-9cc1-ff66584ec758" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2033.png"><img style="width:1924px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2033.png"/></a></figure></div><div id="a46978e5-b947-466f-ac28-0d38b4fb1c32" style="width:50%" class="column"><figure id="eda58b0a-7bed-4640-951c-d69e8046a06f" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2034.png"><img style="width:1245px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2034.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ad555d81-cdb7-4d6e-bb41-3ab438ee6306"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>We need to convert the </strong><code><strong>text</strong></code><strong> into </strong><code><strong>Number</strong></code><strong> type and add it and send it to the client on post request.</strong></div></figure></div></div><figure id="21beb685-c7d8-4b26-9585-c3b86506b610" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2035.png"><img style="width:624px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2035.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cc1d3ed1-c901-46be-b1a3-e841699e2d6b"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>If the client views the page source they cannot see the </strong><strong><code>JS</code></strong><strong> code, they can only see the </strong><strong><code>HTML</code></strong><strong> code and that is the power of an web application.</strong></div></figure><div id="dfb1cc9c-44ad-40f8-bf9b-b9c971a76b06" class="column-list"><div id="4ea13a9e-f6da-4ebe-94f7-df25353eb124" style="width:62.5%" class="column"><figure id="835f3d20-1a0f-462c-8c15-0bb25cad64e1" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2036.png"><img style="width:1957px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2036.png"/></a></figure></div><div id="3bd8c460-73c1-45ab-b027-a5d2af77d2d2" style="width:37.49999999999999%" class="column"><figure id="68e9bff8-c8f6-4528-be9e-4fff49d0e1df" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2037.png"><img style="width:1240px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2037.png"/></a></figure><figure id="766268e0-7586-4831-9e68-099929e3aa2d" class="image"><a href="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2038.png"><img style="width:1280px" src="11%20Express%20js%20with%20Node%20js%2055d247e581624e25b543d6a520b6c19e/Untitled%2038.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="092c6d39-5731-4cea-af37-10e9b4429287"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Here, we have made a new route to </strong><strong><code>/bmicalculator</code></strong><strong> and sending the </strong><strong><code>bmiCalculator.html</code></strong><strong> file. and the result on filling the form.</strong></div></figure></div></div><hr id="b40395cb-7543-45fb-8746-512e7aabec85"/><p id="dc3d90fd-72a1-4fda-b218-6d051c5a92be" class="">
+</p></div></article></body></html>

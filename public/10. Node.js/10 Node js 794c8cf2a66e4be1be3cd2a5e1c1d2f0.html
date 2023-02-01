@@ -1,0 +1,692 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>10. Node.js</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="794c8cf2-a66e-4be1-be3c-d2a5e1c1d2f0" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔟</span></div><h1 class="page-title">10. Node.js</h1></header><div class="page-body"><p id="568cf80f-4ad7-4511-b2d9-d8dffe64ab0e" class="">
+</p><h1 id="67cae0d8-4606-4e51-813f-cb724759a025" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid"><strong>Why Node.js ?</strong></span></mark></h1><p id="1acb336d-b81c-4b55-a65a-39dabc5cd27e" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="896c6ccf-fc17-4f69-b7c5-792cd33a67d5"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>As we all know that Backend can be with many languages, but the main reason we choose </strong><code><strong>Node.js</strong></code><strong> is that it runs with </strong><code><strong>JS</strong></code><strong>, so we don’t actually need to learn a new language. And </strong><code><strong>JS</strong></code><strong> will allow us to execute within the browser but Node.js will allow us to interact with the computers directly that includes interacting with different computers like we can have it in servers where we can run it. Node.js allows us to take JS out of the browser.</strong></div></figure><div id="723cf502-4449-4698-b9c8-7680e461f64d" class="column-list"><div id="0e481564-681e-43e3-9125-ca58d0a364a4" style="width:50%" class="column"><figure id="605c06a8-4b65-4007-8c5e-79aca41f9463" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled.png"><img style="width:3200px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled.png"/></a></figure></div><div id="4950096c-5d60-4188-87d7-4d86b9dbc712" style="width:50%" class="column"><figure id="c8fd0a9e-c615-45e5-8f22-9960c3117552" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%201.png"><img style="width:3200px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%201.png"/></a></figure></div></div><hr id="43d8e194-483c-4c8e-bb5b-e83916fc68ea"/><h1 id="3db5ab67-7ba9-481e-b1c4-768e51de4d27" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Creating/Running a JS file in Hyper:</span></mark></h1><p id="09af0a75-d2e0-4483-8f96-e0c4d4bfdc2c" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d22d1e3c-5dca-43b1-9424-ae938083f590"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>To create a </strong><strong><code>.js</code></strong><strong> file in Command line we need to use </strong><code><strong>touch</strong></code><strong> command and to open it we need to use </strong><code><strong>start</strong></code><strong> command. To run it in the command line, we need to used </strong><code><strong>node</strong></code><strong> command. </strong></div></figure><div id="9c34df67-9560-4ae1-90a0-7ba49f64b33c" class="column-list"><div id="f1b2d667-5cf1-4e1d-a848-832912cae5b8" style="width:50%" class="column"><figure id="5ae388bd-5d3c-44d1-9ea4-cd37609e5f34" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%202.png"><img style="width:816px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%202.png"/></a></figure></div><div id="24186275-b94f-4060-bf86-2e0d1dcf6d0b" style="width:50%" class="column"><figure id="a62ec246-9424-453d-a570-83084544a5cc" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%203.png"><img style="width:820px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%203.png"/></a></figure></div></div><hr id="3fe8deee-11c8-4982-a525-a3a5ce92d105"/><h1 id="faedaa2e-d60f-44c0-8e15-07cc41975f4a" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Node REPL:</span></mark></h1><p id="d4a5e3f0-97a8-4fa2-be4c-b90fcf141c61" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e1d51558-42eb-4481-a111-2201a58a34a2"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><mark class="highlight-teal"><strong><span style="border-bottom:0.05em solid">R</span></strong></mark><mark class="highlight-teal"><strong>ead </strong></mark><mark class="highlight-teal"><strong><span style="border-bottom:0.05em solid">E</span></strong></mark><mark class="highlight-teal"><strong>valuation </strong></mark><mark class="highlight-teal"><strong><span style="border-bottom:0.05em solid">P</span></strong></mark><mark class="highlight-teal"><strong>rint </strong></mark><mark class="highlight-teal"><strong><span style="border-bottom:0.05em solid">L</span></strong></mark><mark class="highlight-teal"><strong>oops </strong></mark><strong>is simply the same as chrome developer tool console where we can write single line of JS code and see the output thereby. 
+</strong><mark class="highlight-yellow_background"><span style="border-bottom:0.05em solid"><strong>To start</strong></span></mark><strong> ⇒ </strong><code><strong>type node and hit enter</strong></code><strong> 
+</strong><mark class="highlight-yellow_background"><span style="border-bottom:0.05em solid"><strong>To Exit</strong></span></mark><strong>  ⇒ </strong><code><strong>either click </strong></code><mark class="highlight-teal"><code><strong>ctrl + c twice</strong></code></mark><code><strong> or </strong></code><mark class="highlight-teal"><code><strong>type .exit</strong></code></mark><mark class="highlight-teal"><strong>
+</strong></mark><mark class="highlight-yellow_background"><span style="border-bottom:0.05em solid"><strong>Suggestions</strong></span></mark><strong> ⇒ </strong><code><strong>click tab twice</strong></code></div></figure><figure id="25c473f9-ae6f-4f40-9c3a-a830a9e4f302" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%204.png"><img style="width:576px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%204.png"/></a></figure><hr id="46e39940-07f5-4b0d-95e0-46ad5fccf28b"/><h1 id="f71855da-26cc-4397-ba8c-da56674c256d" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Using native Node modules:</span></mark></h1><p id="4cdbaacd-b08a-41f1-b0a2-11be327782e9" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7e882444-d4f5-438d-8510-cc5532d3f6fe"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>To use the native Node modules, we need to first get that module into action by using the below command. Including the </strong><code><strong>FileSystem</strong></code><strong> module.</strong></div></figure><figure id="aedb53a1-b021-4b9a-a8bc-b40d846bae6b" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%205.png"><img style="width:624px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%205.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ecf86c25-5879-4c42-b205-903ff3a6d03c"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>using the opened module we can use the </strong><strong><code>copyFileSync()</code></strong><strong> method that takes two arguments a source and destination. If there is no file named as the destination source, then it will create a file of the given name and copy it or if it is already present, then it will replace the entire document’s content.</strong></div></figure><figure id="bae2c2cf-e047-4164-ab7c-1feba13d4720" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%206.png"><img style="width:720px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%206.png"/></a></figure><div id="4a027e8a-d735-49a4-b55e-23f4ffbb375d" class="column-list"><div id="e5fb745c-2a04-42cc-a88d-ed529a46c284" style="width:56.25%" class="column"><figure id="583e7cad-3a09-45e0-8db2-f7a00f3e02ab" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%207.png"><img style="width:1098px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%207.png"/></a></figure></div><div id="19a3209f-a844-4d6e-acbb-b62f197a8008" style="width:43.75000000000001%" class="column"><figure id="a44bff5e-3cc9-4a70-bacd-a13dc1cb94b9" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%208.png"><img style="width:1605px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%208.png"/></a></figure><figure id="ce258d86-1e37-4dc4-b53f-5e3777e83ead" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%209.png"><img style="width:1221px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%209.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a7e5a288-811b-485b-a0a3-1e56da0ecb0b"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong><span style="border-bottom:0.05em solid">Docs link:</span></strong><strong> </strong><mark class="highlight-yellow"><code><strong><a href="https://nodejs.org/dist/latest-v18.x/docs/api/">https://nodejs.org/dist/latest-v18.x/docs/api/</a></strong></code></mark></div></figure><hr id="0c4b3c59-c812-451d-a2df-c5dad5271f55"/><h1 id="34692e31-7e48-4549-914a-1c770b7e52d5" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">NPM:</span></mark></h1><p id="16cc8799-5d23-40f1-8e33-744fb680cb7b" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cc1a8cfb-3ca0-4243-ba99-b29e15317341"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Node Package Manager is used to find a particular package in the internet that someone has already written apart from the native modules of Node and we can simply use them. To initiate an </strong><code><strong>npm</strong></code><strong> we need to use the command ⇒ </strong><code><strong>npm init</strong></code><strong> </strong></div></figure><div id="c0b27b0c-6873-499c-a83f-dd3d5d4a2db7" class="column-list"><div id="a65dc7f0-4e4e-49ab-a2b3-0f33ff72be72" style="width:50%" class="column"><p id="7c0289b5-a83a-433c-9117-4ccf7f68b4be" class="">
+</p><figure id="d7599c6e-c179-4827-a9d3-5841ce84b3f8" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2010.png"><img style="width:1725px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2010.png"/></a></figure></div><div id="0f39f300-f544-45e0-89c3-489c2872c8a3" style="width:49.99999999999999%" class="column"><figure id="57284dfa-173e-4b0c-b6ab-31a53c330fc7" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2011.png"><img style="width:720px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2011.png"/></a></figure></div></div><figure id="671e4f38-bdf2-441a-8c2c-758fe3d84369" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2012.png"><img style="width:768px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2012.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f2bc069e-6ab4-4bab-a09b-4c1fbd7413b9"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>To include a new package, we need to go to </strong><strong><code>npm</code></strong><strong> site and find the package that you need and install the package using the command ⇒ </strong><code><strong>npm install superheroes</strong></code><strong>, as soon as the package is installed, we will see that the </strong><code><strong>dependencies</strong></code><strong> gets added up in the </strong><code><strong>package.json</strong></code><strong> [</strong><code><strong>json</strong></code><strong> is a file extension that is used to store details like a JS object]</strong></div></figure><figure id="e8847756-1d2e-4e3d-a047-2722c2bbfeae" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2013.png"><img style="width:816px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2013.png"/></a></figure><figure id="fdf61c7c-5bb9-447c-9f3b-370d6906be93" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2014.png"><img style="width:720px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2014.png"/></a></figure><div id="ceb2098b-d425-4bf8-972f-baa0bdb891ec" class="column-list"><div id="a3047118-70dc-4deb-a545-30b34e037b37" style="width:50%" class="column"><p id="38278fd2-1941-4dd7-9f65-f158a2c9b771" class="">
+</p><p id="0ac24fd4-f86b-446c-b3ea-1ac98ae75724" class="">
+</p><p id="cd3fe103-e604-4cff-96c6-04b1f7d38e55" class="">
+</p><p id="257aa1fc-2526-4667-a268-f0179eebdc42" class="">
+</p><p id="3ca48c5e-9137-4934-837e-b98770ebcaeb" class="">
+</p><figure id="a9e45d4a-c93b-4e8d-9bdd-76f152ff05b0" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2015.png"><img style="width:1097px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2015.png"/></a></figure><p id="711c212a-fffb-4754-b584-3ea87ba6b8cd" class="">
+</p><p id="60fe1408-fae9-4f00-953c-1cc51b4ad47d" class="">
+</p><p id="c3766497-6be9-4b74-88fe-61b5e27cf2b8" class="">
+</p><p id="f6687d1d-79a5-4509-b34f-f2f864727cdd" class="">
+</p><p id="7e43fe9f-db77-48f5-81e2-c918eeccc0f7" class="">
+</p><p id="e05ca244-d844-4893-950b-f57d8040b472" class="">
+</p><p id="eea606d1-345e-4444-9629-26a3654b763d" class="">
+</p><figure id="8e084406-d339-421d-b378-294c3524a733" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2016.png"><img style="width:1163px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2016.png"/></a></figure></div><div id="283c2681-b34a-4cf8-a769-b8b7efb56ce4" style="width:50%" class="column"><figure id="df8481da-c94c-4b35-9e39-52299976f2a5" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2017.png"><img style="width:1390px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2017.png"/></a></figure><figure id="6c5c8f03-9178-405a-bbed-6ec450359f72" class="image"><a href="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2018.png"><img style="width:1160px" src="10%20Node%20js%20794c8cf2a66e4be1be3cd2a5e1c1d2f0/Untitled%2018.png"/></a></figure></div></div><hr id="99454e00-d0c6-44b7-a754-3a8c00954e2e"/><p id="3ad6f482-f8f4-49b6-8886-3d4aff57f665" class="">
+</p></div></article></body></html>

@@ -1,0 +1,688 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>7. DOM (Document Object Model)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ddba1da6-50eb-49f1-8388-d02cfbab3258" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">7️⃣</span></div><h1 class="page-title">7. DOM (Document Object Model)</h1></header><div class="page-body"><h1 id="6aee3ee7-545b-479b-bc38-dc4258751d81" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Inline JS:</span></mark></h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c1b7a9eb-790d-43ed-9d2b-6d2a914fa0df"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong><strong><strong><strong><strong><strong><strong><strong>In this way we have included the alert command in the inline JS, but it is showing error as we have used </strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong>“</strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong> in 2 places, namely inside the argument of alert and the onload string, so to overcome the error we need to use </strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong>‘</strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong> for one pair which makes it separated from the other. [NOT RECOMMENDED]</strong></strong></strong></strong></strong></strong></strong></strong></div></figure><div id="cc3846cb-edfb-4891-b40f-149016c21b68" class="column-list"><div id="20fc68af-8f86-4ce3-8eda-b89e9e109c39" style="width:50%" class="column"><figure id="af45ab6c-be20-4989-a1aa-4ec3bfbba690" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled.png"><img style="width:1205px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled.png"/></a></figure></div><div id="5536ef7d-ef0b-4d68-9689-316ac3ff59f9" style="width:50%" class="column"><figure id="74021c4c-bf52-4757-b922-56c3d9079fc2" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%201.png"><img style="width:1183px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%201.png"/></a></figure></div></div><figure id="79c17f26-a561-40de-bc5d-11a6b25d0b87" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%202.png"><img style="width:3200px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%202.png"/></a></figure><figure id="da533656-0f8c-4a99-98cb-10ad4e93875a" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%203.png"><img style="width:3200px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%203.png"/></a></figure><hr id="28ea0f6e-cbc8-444d-8c5b-145a3eed470d"/><h1 id="20649cb2-31f2-4bba-a4f1-d4618f2da107" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Internal JS:</span></mark></h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b506ca06-3aee-4267-930b-7ff86ee38a27"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>It is given between the </strong><code><strong>&lt;script&gt; </strong></code><strong>tags and, it is only applicable for the file in which it is included. [RECOMMENDED IN CERTAIN SITUATION] </strong></div></figure><figure id="3e7b5f89-488f-46a5-b581-75894a55559d" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%204.png"><img style="width:624px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%204.png"/></a></figure><hr id="f6429674-1d4e-4101-ada5-76b54d63a4e2"/><h1 id="8e554733-2fab-4287-94d6-2b83dc2201a0" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">External JS:</span></mark></h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="37740128-0a4c-4656-bd3c-57f404a928d0"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Creating a separate file and giving an option for reusability in many code just by including it. [MOST RECOMMENDED]</strong></div></figure><div id="3f2e2230-1f27-4388-a0eb-0e1566fef797" class="column-list"><div id="1ba49465-4b55-458a-9420-97df47d0d557" style="width:62.5%" class="column"><figure id="82d62899-ea17-4e85-a9c1-46f264f4d4ab" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%205.png"><img style="width:1356px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%205.png"/></a></figure></div><div id="a0de2c5c-c292-44db-a37b-3cd7bfe1aa56" style="width:37.50000000000001%" class="column"><figure id="46ac545b-7df3-4fb2-8677-9c3327bb6cc5" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%206.png"><img style="width:568px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%206.png"/></a></figure></div></div><hr id="86e429d1-666d-4b02-a4b2-16f028ecdb99"/><h1 id="dc2b959b-5290-4f73-8932-0f12c5186145" class=""><mark class="highlight-red"><span style="border-bottom:0.05em solid">IMPORTANT OBSERVATIONS:</span></mark></h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d9f9086-c49a-4d5a-9bf7-6a333343a5fc"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%"><strong><strong><strong><strong><strong><strong><strong><strong><strong>The position of the css link is very important as we always place them at the </strong></strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong><strong>&lt;head&gt;</strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong> tag because it should load up before all of the content of the website loads up.</strong></strong></strong></strong></strong></strong></strong></strong></strong></div></figure><div id="d352b597-ccee-4ebb-a813-770b7419a693" class="column-list"><div id="7af2e011-50e9-4fef-ac61-7928463a7692" style="width:50%" class="column"><figure id="ac551720-0f9a-49ea-abab-58ea39b57e9e" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%207.png"><img style="width:1401px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%207.png"/></a></figure></div><div id="164e7f0a-fdfc-4fd0-994b-063eb1860acc" style="width:50%" class="column"><p id="366a0b00-326c-4e47-9820-30d91af23804" class="">
+</p><figure id="2f06f505-5d75-487f-908c-0b840ddd0ba1" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%208.png"><img style="width:610px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%208.png"/></a></figure></div></div><div id="ca644aac-1f79-4f86-8797-39ba867fd60d" class="column-list"><div id="9fc4c093-b1f5-4bf1-b9e5-7ad652c5c7cd" style="width:50%" class="column"><figure id="b12b905d-5093-466a-b022-8ecb9c89204d" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%209.png"><img style="width:2230px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%209.png"/></a></figure></div><div id="73e68074-b731-41cc-9d75-033797ee1826" style="width:50%" class="column"><figure id="98f13fdd-b8de-4843-a12c-b14a9849242d" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2010.png"><img style="width:1719px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2010.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a1a280d6-265d-43fd-b006-a4e8469f7fd8"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong>Observe that until the link is executed, the </strong><strong><code>h1</code></strong><strong> look black as the css is not loaded, but once the css is loaded, it becomes red</strong></div></figure><div id="dade0711-1744-49c8-9207-32182d6cea43" class="column-list"><div id="e2dee816-9c2a-4713-8142-f54b823b3f9b" style="width:50%" class="column"><figure id="00bdb0b5-364f-4278-a8d0-84439c6991ab" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2011.png"><img style="width:1377px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2011.png"/></a></figure></div><div id="dd4dad99-21f0-410e-b5ed-509c4c4dd5c7" style="width:50%" class="column"><figure id="037237ae-a011-47da-9496-bf3a6c3ea3cc" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%208.png"><img style="width:610px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%208.png"/></a></figure></div></div><figure id="9da73f30-29de-4766-992d-3962822dbc94" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2012.png"><img style="width:864px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2012.png"/></a></figure><figure id="ecd9f8ae-ab71-4865-95c5-e574539323a7" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2013.png"><img style="width:864px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2013.png"/></a></figure><hr id="ea97fc60-99d2-44eb-941d-f1816488dbf5"/><p id="93a4d840-6191-4a47-a3a9-520517df9979" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="50a013e0-7da4-4982-86b0-52af310133ed"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%"><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Same as CSS, if we change the position of the  </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&lt;script&gt;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> tag there will be some changes. If the </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>JS</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> is trying to modify a HTML tag, then if we include the JS link before the HTML tag’s declaration, then it will not work.</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></div></figure><div id="c3db01f6-c685-4cf9-b59c-59135c92a13c" class="column-list"><div id="971682e9-3e64-4aff-9169-fc9e150334ed" style="width:50%" class="column"><figure id="a2865f81-da66-4d43-8136-d42a6b8b225c" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2014.png"><img style="width:1416px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2014.png"/></a></figure></div><div id="e08b07ee-df53-4f3c-8820-4a42913e0790" style="width:50%" class="column"><p id="a37506b3-4159-4bd5-b374-326221ed8822" class="">
+</p><figure id="3ed5d74e-0694-4c75-8575-92007cfc4f7d" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2015.png"><img style="width:1404px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2015.png"/></a></figure><figure id="bdccb475-74af-41ea-b5c7-9bed4535028c" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2016.png"><img style="width:1562px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2016.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="68bbd444-e3f0-4a09-814c-9bf4e9d3a123"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong>If we include the same link after the tag has been established then it will work properly.</strong></div></figure><div id="40fb64de-8da4-4932-827e-2b98ee68ba5e" class="column-list"><div id="dc104c7c-2c44-4df9-b8a0-4876b91f6ba6" style="width:50%" class="column"><figure id="0031b296-b411-4a6e-9f7b-dcbf78ad0f3e" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2017.png"><img style="width:1334px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2017.png"/></a></figure></div><div id="2f591f79-649a-4075-ae62-34dab728b1d5" style="width:50%" class="column"><p id="328c970b-fbc8-4f2d-8a16-672181bd3ac3" class="">
+</p><p id="76e45753-a2b2-4de0-b119-d385119d9d5a" class="">
+</p><figure id="aeb2def5-31c4-4a86-accf-b6478e4f8661" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2018.png"><img style="width:1402px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2018.png"/></a></figure><figure id="096d6e71-9de1-4767-b73b-3198a11ea5b3" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2019.png"><img style="width:1822px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2019.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="72fbde08-925a-4b8d-8642-a022e24032f1"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>The best practice by programmers is that they always include the </strong><strong><code>JS</code></strong><strong> link at the </strong><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>a</mi><mi>s</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">last</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">a</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span></span></span></span></span><span>﻿</span></span></strong><strong> because if we include it at </strong><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>o</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">top</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">p</span></span></span></span></span><span>﻿</span></span></strong><strong>, then it will load first and create room for the HTML to load, so there will be a time delay.</strong></div></figure><div id="bb911e8f-99e4-4d44-b5d1-24040c35de8d" class="column-list"><div id="bf6176ce-e035-4bf0-a653-71baea4ba18f" style="width:50%" class="column"><figure id="d06a2699-ecf9-40c3-a428-54114a5f69a3" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2020.png"><img style="width:432px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2020.png"/></a></figure></div><div id="9fc9e291-a88d-4f38-9bdc-f189f44f8efc" style="width:50%" class="column"><figure id="0c93e337-a62a-4903-b7fc-1dc4a655f33d" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2021.png"><img style="width:1537px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2021.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e3e85d99-9f84-4f61-99c1-6c5c41447e90"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>It will create an error as there is no h1 tag at the time of including the JS</strong></div></figure><hr id="6f7fcda1-1572-4f4a-812a-0d397b0bba97"/><h1 id="042fe22d-b01d-41df-91da-49f2dda97d34" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Introduction to DOM:</span></mark></h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4dfd01fa-3f58-4bce-934b-905d10de7e0c"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>The DOM usually segregates every page into trees.</strong></div></figure><div id="b8c382cd-2cf5-496b-95dd-e0d297b2a85a" class="column-list"><div id="c305b2b7-9c73-4eb6-a532-f6bbaa3df2e4" style="width:50%" class="column"><figure id="e65b0837-8060-4688-aacd-9fd13598393f" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2022.png"><img style="width:2884px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2022.png"/></a></figure></div><div id="98704931-b4bc-4614-8246-a6e6da1c77df" style="width:50%" class="column"><figure id="f6521e21-fac1-4bc7-954e-a08928cc702a" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2023.png"><img style="width:2782px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2023.png"/></a></figure></div></div><figure id="dad3c949-fbbe-44a5-b225-410ce622b1e8" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2024.png"><img style="width:576px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2024.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f1734a85-4031-49ed-a4b3-b19d08ee404f"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>Below are the examples of how to select a particular element in DOM</strong></div></figure><div id="158045e2-9b49-45b1-9b83-9b2b89ac9246" class="column-list"><div id="2facd3fb-b370-4d58-8022-67c6eab00970" style="width:37.5%" class="column"><figure id="50e604e1-1d99-434f-872e-b8f6d2c7c64c" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2025.png"><img style="width:611px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2025.png"/></a></figure></div><div id="2a994add-ffc1-42c2-b05d-05b904c679dd" style="width:62.5%" class="column"><figure id="a9be7444-7128-44db-86f8-8cd3fed19b1f" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2026.png"><img style="width:1717px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2026.png"/></a></figure></div></div><div id="bc83f985-34ab-4423-8f4d-cc7f7a0c5a9f" class="column-list"><div id="99bf7e0b-207b-45fd-bed6-a2e763ac5d6f" style="width:68.75%" class="column"><figure id="5c946b86-271a-415a-b183-1da02e8cdb47" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2027.png"><img style="width:1249px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2027.png"/></a></figure></div><div id="e7f8ada4-db57-4c76-91a8-6c9af921754f" style="width:31.249999999999993%" class="column"><figure id="5a12de50-8afb-472a-965c-d0d9ed4f4545" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2028.png"><img style="width:567px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2028.png"/></a></figure></div></div><hr id="57933b12-d65b-49ea-8853-83073defcfd6"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c46c60a9-9b50-41a1-978c-cf8f19066f7b"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>Example:</strong></div></figure><div id="a4a3ff53-591f-42b0-a4bd-d5dd67643cc4" class="column-list"><div id="ae868a46-c4d9-428d-95ea-70e55c0c7696" style="width:50%" class="column"><figure id="4ef51eb2-f1fb-4922-b2a4-21290f3f28fc" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2029.png"><img style="width:768px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2029.png"/></a></figure></div><div id="4c34fa13-e926-4566-9e8b-1238696e69b4" style="width:50%" class="column"><figure id="272e1241-a26a-4f6d-9508-9dc61d92f794" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2030.png"><img style="width:720px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2030.png"/></a></figure></div></div><hr id="ec5e6cd6-87f1-4dfb-9d20-a03cbc589ad1"/><h2 id="0ec94826-970b-4946-936a-9ce5958fd8f7" class=""><mark class="highlight-teal"><span style="border-bottom:0.05em solid">Difference between Properties and Methods:</span></mark></h2><figure id="7e17e8b1-b32e-4786-9a4a-d22cc93b64a1"><div class="source"><a href="https://www.notion.soundefined"></a></div></figure><div id="16d23119-fc4a-4e4f-89cb-46e94c6f73dc" class="column-list"><div id="c002683f-ce1a-4b83-a329-249b3613434e" style="width:33.333333333333336%" class="column"><figure id="3c801877-e1fe-4bb4-bfff-2b710f631dea" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2031.png"><img style="width:3051px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2031.png"/></a></figure></div><div id="8da7078e-13af-4393-864b-4b00a0f4aab8" style="width:33.33333333333333%" class="column"><figure id="c2b89a25-cb71-47fe-9663-4e9cb18ba81a" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2032.png"><img style="width:3147px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2032.png"/></a></figure></div><div id="edf13b7c-ce2d-4588-a61c-daf9b7cdc8e6" style="width:33.33333333333333%" class="column"><figure id="d2bacbef-7c65-4519-9601-cfc0dc8b6fcb" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2033.png"><img style="width:3171px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2033.png"/></a></figure></div></div><figure id="a7de4527-499d-436a-a505-7e59c98852cc" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2034.png"><img style="width:624px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2034.png"/></a></figure><hr id="0e77857a-e5f5-4716-9e46-154217468192"/><h1 id="4e07188f-8ccd-4084-80ff-47c4a8f92c26" class=""><mark class="highlight-red"><span style="border-bottom:0.05em solid">TASK:</span></mark></h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c4762d23-ee78-4fbe-842b-a9323c18585b"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Select the last list element “third” in DOM and change it to your name.</strong></div></figure><div id="3a459e51-159e-4f81-a841-f73528bf7f79" class="column-list"><div id="ec8f5550-5a70-4c91-9a9c-3a86144c3887" style="width:75%" class="column"><figure id="14fcf90e-1b17-4ee3-88fb-377bb7295ac3" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2035.png"><img style="width:1323px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2035.png"/></a></figure></div><div id="ae865280-ad31-4ae4-b9d4-d269497af22e" style="width:25.000000000000007%" class="column"><figure id="a9dad909-18c9-4dc7-907f-2f0ada945dd1" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2036.png"><img style="width:642px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2036.png"/></a></figure></div></div><hr id="b62987cf-08eb-41b6-8814-f58a93867884"/><h1 id="2d0ee727-68ed-4550-bd2a-f4c35980fcdb" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Selecting HTML elements with JS:</span></mark></h1><p id="a6877b63-c337-457a-8b44-9c0e3fac0893" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="fb605dc4-00ec-4db8-a93d-bbbd5d8f9c8c"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%"><mark class="highlight-yellow"><strong><code>document.getElementsByTagName()</code></strong></mark></div></figure><div id="ff420bc4-63b5-43ad-b0ea-9909908eeb1e" class="column-list"><div id="4ea62ba7-ce03-461e-b464-3f548051dd7c" style="width:50%" class="column"><figure id="b6150eb9-2228-4da9-804b-b6f7d415e70a" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2037.png"><img style="width:783px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2037.png"/></a></figure></div><div id="4f430995-88eb-4181-8776-8bfe4ee62248" style="width:50%" class="column"><p id="55ae15b1-fa52-4727-86a4-28d300988234" class="">
+</p><p id="7a767cdc-6ebb-4cd0-87dd-c95600ad71cb" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0e27012e-bf69-43f9-be49-96105bd0c6b0"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>It searches for all the elements with that tag name and return them in an array.</strong></div></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2ae83a93-8314-4c87-91c8-31bf00be3953"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>If we want to style the </strong><strong><code>“li”</code></strong><strong> elements, we should access the individual elements by using an index and if we don’t use it, we will get error.</strong></div></figure><div id="0a68b9c5-ff2e-442b-a45c-a76279608219" class="column-list"><div id="c3a9377b-f09b-43fc-a301-5ed1cce0bae5" style="width:62.5%" class="column"><figure id="28776eb2-f84c-4303-ab83-2bfd0411800f" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2038.png"><img style="width:1134px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2038.png"/></a></figure><figure id="d12af3d5-cb8c-4008-9555-a4713e7d76c9" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2039.png"><img style="width:720px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2039.png"/></a></figure></div><div id="844c4350-dfb6-4bf4-ae4c-0cbcc5fdef67" style="width:37.5%" class="column"><figure id="36a9fc99-5fc3-4551-b88e-8170b52bca42" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2040.png"><img style="width:613px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2040.png"/></a></figure></div></div><hr id="5dd43b9d-2a2d-4193-8d06-2d1d5da4edba"/><p id="86d28f59-85dc-4b95-a755-15bb1cb9da4c" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="614a9350-8cd0-4106-85e8-81d7b8aa0d8a"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%"><mark class="highlight-yellow"><strong><code>document.getElementsByClassName()</code></strong></mark></div></figure><figure id="5d5829aa-7fa5-4410-ab25-77aea6599740" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2041.png"><img style="width:768px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2041.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2ac62a37-e901-4fed-bd4a-b627ed32d6b9"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Same as </strong><strong><code>document.getElementsByTagName()</code></strong><strong> , we will get array of element s that matches the class name, even if have only one element, we still need to use index to access then and make changes, else we get error.</strong></div></figure><p id="1d0934c9-5544-4d9f-866c-7db253546c9e" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="55817031-47e4-4612-af0a-95db8e7fd07c"><div style="font-size:1.5em"><span class="icon">3️⃣</span></div><div style="width:100%"><mark class="highlight-yellow"><strong><code>document.getElementsById()</code></strong></mark></div></figure><div id="461934f4-a331-4d7f-b685-c20fd7fad190" class="column-list"><div id="f0afb24e-9f38-4e7b-ad02-fc02e92f47fa" style="width:75%" class="column"><figure id="38879c98-eacd-470b-8c39-07bf9bc3d172" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2042.png"><img style="width:965px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2042.png"/></a></figure></div><div id="92702d07-edeb-4f20-ba94-4a0762246d57" style="width:24.999999999999996%" class="column"><figure id="8b82db06-606c-453d-adcf-08be02ed9490" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2043.png"><img style="width:588px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2043.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c73cb9ba-7f62-4c4a-9194-028e219c755e"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>If you observe that here the function name is one Element and not Elements so the returning no. of. element by the function will be one as only one element can use an id.</strong></div></figure><p id="2eb9b2ef-5ac0-491b-801a-06215b6a5838" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e2305770-5de5-4bc2-8667-594801b6899f"><div style="font-size:1.5em"><span class="icon">4️⃣</span></div><div style="width:100%"><code><mark class="highlight-yellow"><strong>document.querySelector()</strong></mark></code></div></figure><div id="d38df58e-1b68-4ea4-8814-6cd8fc38ef5b" class="column-list"><div id="37f16b00-0988-4f65-afa0-950e07582250" style="width:50%" class="column"><figure id="57c196fc-4f11-4404-92ba-16614bcd1b33" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2044.png"><img style="width:1926px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2044.png"/></a></figure></div><div id="48f42638-88e2-46a0-bde2-16e27ca765b2" style="width:50%" class="column"><p id="239b46f5-0fc2-40c5-8d12-3f0fd9a211bd" class="">
+</p><figure id="15737f3e-a197-45c1-92bd-59c9d09178dd" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2045.png"><img style="width:528px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2045.png"/></a></figure></div></div><figure id="26ebdd57-e12d-4f20-bb18-930a3be3a79e" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2046.png"><img style="width:708px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2046.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ca425836-fe92-4319-9c33-9ce3fa183a3e"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>The code shows that even if there is 3 list items, it is only returning the first item.</strong></div></figure><p id="1d0c58b3-fcd9-4a7d-81b0-5011c3644372" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3f999eff-70a9-4d5d-b069-ec0139182209"><div style="font-size:1.5em"><span class="icon">5️⃣</span></div><div style="width:100%"><code><mark class="highlight-yellow"><strong>document.querySelectorAll()</strong></mark></code></div></figure><figure id="7ef4da4d-2b5a-4de8-b21d-399be0b6627e" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2047.png"><img style="width:624px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2047.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c918991e-b7a3-4aa3-ad42-b0f3194413be"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Will include all the elements that match the selector.</strong></div></figure><div id="83fd8a46-a17c-4aca-9a16-b5efdbdb8a90" class="column-list"><div id="e815bed0-55c2-4bb0-8f67-aa6231a59ba8" style="width:87.5%" class="column"><figure id="68c8d183-c0f9-4b61-9467-1413c4fc1f4e" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2048.png"><img style="width:794px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2048.png"/></a></figure></div><div id="11f29fc5-7808-4f3e-a0c8-f3132db72b1c" style="width:12.499999999999996%" class="column"><figure id="21f7230e-6b29-4621-b400-abd6dd9fdc2f" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2049.png"><img style="width:403px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2049.png"/></a></figure></div></div><hr id="8c4c03b4-0197-4de3-bb1f-ce546d8264a6"/><p id="8fb0f8b4-340a-4713-8c9e-a32ef048b780" class="">
+</p><div id="09349d37-b9fd-4650-ab40-44434cfc9967" class="column-list"><div id="48253b4d-335c-4da3-9177-7af2c59287d3" style="width:81.25%" class="column"><figure id="0c5bb0bb-cf99-4845-816c-2e888f0adccb" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2050.png"><img style="width:903px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2050.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="08fced1e-cb8e-4f22-947b-2b89f68f06e0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong>If we use the query selector to select the first list element, then it will only change the colour of the bullet point and not the text</strong></div></figure></div><div id="d7d608da-6b74-471b-8c4f-bb3a09a2b48d" style="width:18.750000000000007%" class="column"><figure id="bdda6553-c698-4911-a659-d71101c05a13" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2051.png"><img style="width:400px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2051.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0a100d7b-0de1-4048-8c44-92855b6b6cf6"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>The main advantage of using </strong><code><strong>querySelector()</strong></code><strong> and </strong><code><strong>querySelectorAll</strong></code><strong> is that we have a wide range of access to selector and we can use tag name, class name, id name, etc. So, these two are the most recommended.</strong></div></figure><hr id="3317be88-fd89-463a-b855-086edb3d9e51"/><h1 id="45e5215f-bf7d-4e80-a593-ceb74ad12ae4" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Manipulating and Changing Styles of HTML Elements with JS:</span></mark></h1><p id="44e11065-c810-48ca-af66-0e0c01866936" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="9e83a6d1-e423-4f27-80b5-087d9ac70f24"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>All the changes in properties that we make through </strong><strong><code>CSS</code></strong><strong> can also be done using </strong><strong><code>JS</code></strong><strong> , but the property’s name will be slightly different as everything will be in </strong><strong><code>camel casing</code></strong><strong> and does not contain </strong><strong><code>-</code></strong><strong> and even if the property that we are going to set is having a unit in number we should enclose them with the </strong><strong><code>“ ”</code></strong></div></figure><div id="8a6a23a4-b4e8-48d1-b9f3-eb11aab64924" class="column-list"><div id="a13fc642-fdde-4940-95d4-23a3cba8256f" style="width:81.25%" class="column"><figure id="ee2dd1cc-31e4-4584-9cbc-bc1152ae74b3" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2052.png"><img style="width:873px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2052.png"/></a></figure></div><div id="b65fc6f4-272d-46db-b54d-b53a6242348a" style="width:18.750000000000007%" class="column"><figure id="9089afa7-9ece-4438-a337-698149a065b2" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2053.png"><img style="width:928px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2053.png"/></a></figure></div></div><p id="c7be5a81-dcea-4434-9696-3d57e9dc5b0e" class="">
+</p><div id="93f9ab21-c336-4d74-aa2f-6e4b720abc31" class="column-list"><div id="e3b4f0e2-71ea-446f-82e3-8fa5aa74aaab" style="width:75%" class="column"><figure id="fd772685-86cf-46df-a7b2-8edb99d577ca" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2054.png"><img style="width:802px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2054.png"/></a></figure></div><div id="cad72ffa-9565-46fc-8196-83c9810f5465" style="width:25.000000000000007%" class="column"><figure id="becb3a82-e648-4c01-8f6e-fb9a2048d3d7" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2055.png"><img style="width:2016px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2055.png"/></a></figure></div></div><div id="a9e04341-1e60-4ad0-bf26-a4c0261038b5" class="column-list"><div id="26af0ca0-4552-4aed-8851-510d1b62e75e" style="width:75%" class="column"><figure id="3767b235-4f59-409e-81e0-123644efb86a" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2056.png"><img style="width:870px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2056.png"/></a></figure><figure id="959623ac-6095-4df7-831f-eeddc53a0d75" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2057.png"><img style="width:381px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2057.png"/></a></figure></div><div id="8ba05f0d-d7e7-4162-a51c-65b95024e2c6" style="width:25.000000000000007%" class="column"><figure id="f867ee67-7a49-4a7c-b594-e167ceede27d" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2058.png"><img style="width:144px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2058.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c832daa6-5de8-4718-b68d-5bd0873bbe72"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Note that there is no </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>“ ”</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> in the CSS version while the JS version has it.</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></div></figure><div id="036272b7-644c-474c-a063-38f618d0dd46" class="column-list"><div id="36d54776-ecce-472c-b061-e032bdc69348" style="width:87.5%" class="column"><p id="62b1f809-bbd4-4c79-947d-e6c0def58e88" class="">
+</p><figure id="f3a0d305-434e-408d-927c-1134fb9eb54c" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2059.png"><img style="width:972px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2059.png"/></a></figure></div><div id="a0daf498-c2dd-4767-af11-c9e035e769eb" style="width:12.500000000000004%" class="column"><figure id="70b80534-f1e0-429b-8d9a-4d4730c7e5e0" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2060.png"><img style="width:502px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2060.png"/></a></figure></div></div><hr id="a3657a72-f11d-4082-b872-86c08e657d83"/><h1 id="6b8db3c2-c831-41e1-81c6-c3f60e4989f3" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">The Separation of Concerns: Structure vs Style vs Behaviour:</span></mark></h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="25cfeb8b-1397-4d80-9b21-cb3cdeef2942"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%"><strong>The main problem of our previous approach is that we are changing the styles using JS but that is not what it is meant for. Styles should be in </strong><strong><code>CSS</code></strong><strong> file and functionality should be in </strong><strong><code>JS</code></strong><strong> file. So we can use </strong><strong><code>.classList</code></strong><strong> and </strong><mark class="highlight-yellow"><code><strong>add, remove (or) toggle</strong></code></mark><strong> a class name on the go.</strong></div></figure><div id="b55cebd5-0831-4b02-bffc-8f4052a828ab" class="column-list"><div id="437efe58-b20b-40d2-a318-9b482a4a2f84" style="width:50%" class="column"><figure id="e78e4398-79fb-476d-9b4e-3827a0b52b42" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2061.png"><img style="width:706px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2061.png"/></a></figure></div><div id="9759e7ce-0e90-41fc-bd9a-e75695d2d52c" style="width:50%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="738a9284-072b-48bb-9ad8-e98951964bee"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Here we will get all the class names in the button element.</strong></div></figure></div></div><hr id="6704d0a7-0f81-4ce7-a739-aebf50bf8b59"/><div id="dff843a2-a4db-466d-b45a-99ba96a2020e" class="column-list"><div id="90924c48-604e-467f-a11a-1772ec3d1a41" style="width:56.25%" class="column"><figure id="1fefef73-049f-4d7d-9912-600126a612d3" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2062.png"><img style="width:927px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2062.png"/></a></figure><figure id="2638b912-2172-4e54-9ae2-3492a143fc34" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2063.png"><img style="width:480px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2063.png"/></a></figure></div><div id="5b72809f-a58b-4ec1-b0f8-6a8a1fcfbc37" style="width:43.75000000000001%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c8dcd82f-1a35-447e-a9a7-1a08d731b1c5"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>The new added class name invisible is added to the element button on the go using JS</strong></div></figure><figure id="e8da7c3f-a8fc-4da0-b911-df568d5ed8e5" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2064.png"><img style="width:634px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2064.png"/></a></figure></div></div><hr id="2e7f055a-e7e7-4183-84cf-206a8fe415bd"/><div id="d9d8e1cb-2691-46b7-ac7d-93fe7620911b" class="column-list"><div id="c3be149d-9075-415a-8181-3a1aaf79c5d1" style="width:87.5%" class="column"><figure id="bbd09548-6e57-4a90-b1e7-7f8f94731cd8" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2065.png"><img style="width:964px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2065.png"/></a></figure></div><div id="74076990-e5a4-493a-9ce5-4a3e64cc8608" style="width:12.499999999999995%" class="column"><figure id="f6ad197d-82d6-4492-b928-c96fd27c30f8" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2066.png"><img style="width:522px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2066.png"/></a></figure></div></div><hr id="8e9f7d84-0dac-4b46-8eee-9c1b9bec5bdd"/><div id="5af61fe1-a0e4-4d5f-b4a8-ae18860e3378" class="column-list"><div id="3d855763-aa20-43b1-9147-683d9beee67c" style="width:50%" class="column"><figure id="ee050844-e8e1-4498-91b1-dc6a40de97f5" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2067.png"><img style="width:982px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2067.png"/></a></figure></div><div id="29f3a389-cd26-4144-a564-30bd1971b7da" style="width:50%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3f35e18e-4b79-4c13-a0d8-9745b56b693c"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>If we use toggle, then it will add the class name if it is not included, and it will remove if it is already there.</strong></div></figure></div></div><hr id="b00db329-169c-45a6-b421-72c38fabb9b8"/><div id="d2cb5ca1-2c36-4cbe-9961-5cc71b6996b7" class="column-list"><div id="11ed328f-228d-4220-9d77-0c77ee393cfc" style="width:68.75%" class="column"><figure id="a61b2509-5e84-480c-b568-811cef6dad4c" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2068.png"><img style="width:617px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2068.png"/></a></figure><figure id="4b52f160-a975-4958-8644-da0ee12635a4" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2069.png"><img style="width:862px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2069.png"/></a></figure></div><div id="c1bcb67c-1716-43a0-b494-082f48c85bbc" style="width:31.250000000000007%" class="column"><figure id="dbd15d4f-2341-40d4-be72-43f40187573c" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2070.png"><img style="width:914px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2070.png"/></a></figure></div></div><hr id="6ce8743f-1a6d-4a9f-a320-8f1671f16cb8"/><h1 id="18ee3d7c-f347-46ca-b9ca-cf74f36f5821" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Text manipulation and text content property:</span></mark></h1><div id="3ff97f37-c84b-4b8d-b9fc-9d50b089ba00" class="column-list"><div id="8ac8294a-8f6c-4143-9c75-9e248d5c1d76" style="width:50%" class="column"><figure id="b66cb606-134d-40ea-b0d5-29bcf1bb21bc" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2071.png"><img style="width:675px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2071.png"/></a></figure></div><div id="5a030d30-3c3d-4ab5-aaca-b120cad2b839" style="width:50%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="29ef5bc7-597d-49f6-8c25-3e4d83df245f"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>If we closely observe, we will see both </strong><strong><code>.innerHTML</code></strong><strong>and </strong><strong><code>.textContent</code></strong><strong> will do the same thing but if we dig deep into it, both are different.</strong></div></figure></div></div><div id="bfa1a583-acb5-437e-8c70-dca26f446443" class="column-list"><div id="eba5d9ed-84bd-479f-9130-2654d8ad1422" style="width:50%" class="column"><figure id="74794412-a2c3-4158-854a-1369b626f4bf" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2072.png"><img style="width:1021px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2072.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="58c9c411-2d8f-4fd1-8c10-affd54fd325d"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>Now, both are different as </strong><strong><code>.innerHTML</code></strong><strong> is providing the properties that has been added to the content as well. whereas </strong><strong><code>.textContent</code></strong><strong> is only providing the string. </strong></div></figure></div><div id="0fd9ce70-8e68-405b-841f-0b1ee10f22d6" style="width:50%" class="column"><figure id="9d904efe-16a4-4dfe-bd87-efeea960977c" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2073.png"><img style="width:658px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2073.png"/></a></figure></div></div><p id="91ff6d00-1c61-4f0a-b026-2b15c1ed898f" class="">
+</p><div id="ac68a061-6356-437d-909c-036aed8945e7" class="column-list"><div id="2202d79c-b78a-4b60-b1d5-5eb2099cd0f9" style="width:87.5%" class="column"><figure id="9c856f14-abeb-4b0b-8f62-7c9ffb6f6cfb" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2074.png"><img style="width:843px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2074.png"/></a></figure></div><div id="a070ea75-690c-4b02-a3f3-e746d8013bf8" style="width:12.499999999999996%" class="column"><figure id="02a83991-125f-49a4-af22-74f9be707592" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2075.png"><img style="width:239px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2075.png"/></a></figure></div></div><div id="22dbcfca-ef59-40e8-9668-1cc140b785e3" class="column-list"><div id="42014fbf-1566-4a69-8a75-057e271f1726" style="width:75%" class="column"><figure id="d1c5044e-1e9e-47dd-b237-490329619072" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2076.png"><img style="width:919px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2076.png"/></a></figure></div><div id="ea46f9e3-7e48-4f54-816e-56a50a0cfa22" style="width:25.000000000000007%" class="column"><figure id="8b20b3ec-4d96-44c9-9e50-f810a10e8365" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2077.png"><img style="width:542px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2077.png"/></a></figure></div></div><hr id="9e1e1427-af9c-4e63-a77d-25bef71daed2"/><h1 id="2d365494-70cf-4699-9158-ec84c791445a" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Manipulating attributes of an element:</span></mark></h1><div id="3ab2f1af-7981-4ef8-b46a-f9f53b345038" class="column-list"><div id="3eceedc7-3397-486f-b1e0-d8232fabe84e" style="width:56.25%" class="column"><figure id="0d916c1f-467c-429e-8945-a6a01f72c924" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2078.png"><img style="width:1121px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2078.png"/></a></figure></div><div id="da5428e6-0486-444a-9fac-ffed0d8e2944" style="width:43.75000000000001%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="70303d5f-e3b8-4fa1-b5f1-4edc9c685524"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>.attributes</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> will give all the attributes with no. of. attributes, </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>.getAttribute()</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> will provide the content of that attribute and </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>.setAttribute()</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> will take two arguments, namely ⇒ the attribute interest and the content. to change it.</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></div></figure></div></div><figure id="0ef13640-cc31-4ead-98c7-bc0808c2fe53" class="image"><a href="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2079.png"><img style="width:1994px" src="7%20DOM%20(Document%20Object%20Model)%20ddba1da650eb49f18388d02cfbab3258/Untitled%2079.png"/></a></figure><hr id="51359d72-7aa9-4cec-b60e-553c51080608"/><p id="2fb05cfb-d4b3-4dbe-8b1d-eeda99c59107" class="">
+</p></div></article></body></html>

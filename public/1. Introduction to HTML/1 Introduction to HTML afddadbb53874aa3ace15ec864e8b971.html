@@ -1,0 +1,697 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>1. Introduction to HTML</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="afddadbb-5387-4aa3-ace1-5ec864e8b971" class="page sans"><header><h1 class="page-title">1. Introduction to HTML</h1></header><div class="page-body"><blockquote id="e71cb8a4-1339-4498-b068-9fdd44ff4100" class="">A browser always gets a <code>HTML, CSS, JavaScript</code> file separately and everything is merged and displayed by the browser, so browser acts like kind of a compiler which compiles everything into a single one and gives it in a more digestible fashion.</blockquote><h1 id="ef610b52-47e1-406d-a7ef-0445bf697aaf" class=""><mark class="highlight-red"><code>&lt;h1&gt;</code></mark><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Heading tags:</span></mark></h1><p id="43cd7b37-891e-4292-9cad-6a9791205d5b" class="">
+</p><p id="3c69bc42-1dcd-4cb4-a2df-6c719264ab9a" class="block-color-yellow_background">&lt;h1&gt;Heading level 1&lt;/h1&gt;
+&lt;h2&gt;Heading level 2&lt;/h2&gt;
+&lt;h3&gt;Heading level 3&lt;/h3&gt;
+&lt;h4&gt;Heading level 4&lt;/h4&gt;
+&lt;h5&gt;Heading level 5&lt;/h5&gt;
+&lt;h6&gt;Heading level 6&lt;/h6&gt;</p><figure id="966ef8d9-bd42-44d0-adbf-1df86fa09e17" class="image" style="text-align:left"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled.png"><img style="width:192px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled.png"/></a></figure><p id="56dd5b0a-a0de-4350-90c3-dadd33e777dc" class="">
+</p><p id="a1563d06-6529-4939-8109-6786f0f827f4" class=""><span style="border-bottom:0.05em solid"><strong>Note:</strong></span><strong> </strong><code>If anything goes beyond &lt;h6&gt; it is considered only as &lt;h6&gt;</code></p><hr id="8d7dbe30-ec3c-4d0c-95a9-2dab2c8a55f7"/><h1 id="6355b179-83d2-4a12-8274-ccce71b01b65" class=""><mark class="highlight-red"><code>&lt;br&gt;</code></mark><mark class="highlight-blue"><span style="border-bottom:0.05em solid"> Line Breaking tag:</span></mark></h1><blockquote id="77fdb60c-7027-4537-9ba1-5f85f9668bd8" class="block-color-gray_background">Used to break a line and move to the next line. It is a <code>self closing tag</code>.</blockquote><p id="ced460a2-6f07-454f-8d19-45985e32bbd7" class="">
+</p><div id="74a9e3f9-57ed-4f6c-9073-c20cc04c7bb5" class="column-list"><div id="83e763c4-c570-4210-a357-9c47e80347ea" style="width:100%" class="column"><p id="618a23b4-99f8-485a-a4be-fa5fa17f93a4" class=""><code>&lt;p&gt; O’er all the hilltops&lt;br&gt;
+Is quiet now,&lt;br&gt;
+In all the treetops&lt;br&gt;
+Hearest thou&lt;br&gt;
+Hardly a breath;&lt;br&gt;
+The birds are asleep in the trees:&lt;br&gt;
+Wait, soon like these&lt;br&gt;
+Thou too shalt rest.
+&lt;/p&gt;</code></p></div><div id="ef7b2850-eef2-4f1c-880c-f3be67dca1be" style="width:100%" class="column"><p id="daead2c4-6408-4d5f-995a-c6cd5b5327f5" class="">O’er all the hilltops</p><p id="58bd8e5a-fda1-4454-905d-61ce71b346bb" class="">Is quiet now,</p><p id="9ccd5b65-7c82-4d65-8e82-06232dc1740a" class="">In all the treetops</p><p id="1dff64cf-2910-4a00-a3b2-ca0cae1ef8fd" class="">Hearest thou</p><p id="d3e5ef79-5e5b-404d-8b13-66ddd97a6c5f" class="">Hardly a breath;</p><p id="b57078ae-4f2d-4d40-99e5-34d65c8882d8" class="">The birds are asleep in the trees:</p><p id="cf0265d5-e83b-425f-b542-a8d8b024be60" class="">Wait, soon like these</p><p id="b1165236-eced-48fa-b2a9-1d80e12316d2" class="">Thou too shalt rest.</p></div></div><hr id="0ee5fd07-4a06-4a85-a34f-60e74ecf9908"/><h1 id="62e82860-9d02-46d9-90ca-5d5f08c0fdc9" class=""><mark class="highlight-red"><code>&lt;hr&gt;</code></mark> <span style="border-bottom:0.05em solid"><mark class="highlight-blue">Horizontal Rule tag:</mark></span></h1><blockquote id="c9f4ac70-3c32-4ec6-9364-0275ead1c4bf" class="">Used to put a horizontal line in the page. It is a <code>self closing tag.</code></blockquote><figure id="54f0d4f6-1c06-4ee1-ba92-1adf8a4a70db" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%201.png"><img style="width:672px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%201.png"/></a></figure><hr id="7e1d93dd-2080-4cbe-a5f3-884dc1558e68"/><h1 id="4f56e47c-a209-470c-844b-f31e3fb28f9e" class=""><code>&lt;title&gt;</code> <mark class="highlight-blue"><span style="border-bottom:0.05em solid">Title tag:</span></mark></h1><blockquote id="0fa9084e-1bc3-495c-8406-23b6832f07a0" class="">It is basically the title of the website that is shown at the top.</blockquote><figure id="3a2179d2-8481-4b99-bd32-fd4748b4bc54" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%202.png"><img style="width:308px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%202.png"/></a></figure><figure id="b8701c18-53a6-42d8-bbfc-076dcff5760f" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%203.png"><img style="width:624px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%203.png"/></a></figure><hr id="6b9b8d12-ee6a-40d2-a719-db59af282beb"/><h1 id="edfacdb5-7bb8-40da-91e5-a9a78f778abb" class=""><code>&lt;center&gt;</code> <mark class="highlight-blue"><span style="border-bottom:0.05em solid">Centered Text element:</span></mark></h1><blockquote id="49d7ab1e-1f36-42a6-999f-3fd50deb5251" class="">It is used to alight a portion of the text horizontally center by enclosing them with the start and end center tag. It is <code>not a self closing tag.</code></blockquote><figure id="53e89049-47fa-4c3d-9032-d6e3331e14a6" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%204.png"><img style="width:624px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%204.png"/></a></figure><figure id="2b608f3d-3acf-46c4-814d-ce81165127c2" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%205.png"><img style="width:768px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%205.png"/></a></figure><hr id="d371f5ef-1575-4cb1-a00b-9e5a77ac13b2"/><h2 id="ce4a0ef3-1a6f-442d-84f0-d5bc0a1ae16d" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-teal">Example:</mark></span></h2><figure id="183c632a-8938-4d4c-814a-b470003091b6" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%206.png"><img style="width:528px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%206.png"/></a></figure><figure id="e95d743c-08bf-4dbf-afec-a6eccb8d3ace" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%207.png"><img style="width:672px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%207.png"/></a></figure><hr id="0f6b7884-26c1-40ac-9155-fc5b276ac1ed"/><h1 id="b4605060-ecaf-47a8-adf9-b4d94dc41748" class=""><code>HTML</code> <mark class="highlight-blue"><span style="border-bottom:0.05em solid">Boiler Plate:</span></mark></h1><figure id="a914b318-1211-4608-b02a-eafb812ec3ef" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%208.png"><img style="width:2092px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%208.png"/></a></figure><p id="ea66a93b-ee75-4f1d-ad94-5489f13592cb" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7e50f5a7-ea52-4afa-9a13-aa86f3c26ea0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><code>&lt;!DOCTYPE html&gt;</code> ⇒ It is to tell the browser in which version the <code>HTML</code> file is written in. [<strong>Current Latest version:</strong> <code>HTML v5</code>]</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="84eca44e-7983-4f95-a7bb-25d4d79ccb0f"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><code>&lt;html lang = “en”&gt;</code> ⇒ Language of the text in the web page. It is more important for the people who can’t see as the “<strong>Assistive Technologies</strong>” can easily work according to the language specified.</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="795373f8-6460-4cd5-a6cc-d635cc4d509d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><code>&lt;meta charset = “UTF-8”&gt;</code> ⇒ It is a tag used to specify the browser that what character set are we using, as some don’t have emojis in them. [<strong>The standard character set is: </strong> <code>“UTF-8</code></div></figure><hr id="c16f075b-f1d5-4202-ad20-644b23d6fe11"/><h1 id="b3acb83b-b6fb-46d8-941a-c3d99ccf7777" class=""><code>&lt;ul&gt;</code> <mark class="highlight-blue"><span style="border-bottom:0.05em solid">Unordered List tag:</span></mark></h1><blockquote id="b61598a4-2e7d-4c44-8724-7f6ebfdb66c0" class=""><strong>Unordered list tag</strong> is used to add list <code>without any Alphabetical (or) Numerical (or) Roman Numerical order</code>. Just plain list.</blockquote><pre id="88db3742-46da-43ee-a4c2-6fc00e260b5f" class="code"><code>&lt;ul&gt;
+    &lt;li&gt;Milk&lt;/li&gt;
+    &lt;li&gt;Cheese
+        &lt;ul&gt;
+            &lt;li&gt;Blue cheese&lt;/li&gt;
+            &lt;li&gt;Feta&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre><figure id="b5f9024a-9a93-4b03-a661-0f5e574797f5" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%209.png"><img style="width:384px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%209.png"/></a></figure><hr id="879a543b-5491-4544-8e96-c6d7650f3b79"/><h1 id="fb880f47-b84e-4a4e-9024-cca7f997a370" class=""><code>&lt;ol&gt;</code> <mark class="highlight-blue"><span style="border-bottom:0.05em solid">Ordered List tag:</span></mark></h1><blockquote id="813fa4b9-91ec-44f5-984a-f69fc336206a" class=""><strong>Ordered list tag</strong> is used to add list <code>with any Alphabetical (or) Numerical (or) Roman Numerical order</code>. </blockquote><figure id="99af8b7a-749e-4490-b601-748c213a5b1a" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2010.png"><img style="width:672px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2010.png"/></a></figure><figure id="358fba5d-3131-477c-8821-f691981aca03" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2011.png"><img style="width:528px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2011.png"/></a></figure><hr id="bde6aff5-ae9d-4816-ba99-70d66e0d8813"/><h2 id="6eed11c0-f9f5-4511-a52f-188d233f993e" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-teal">Nesting of</mark></span><span style="border-bottom:0.05em solid"> </span><code>&lt;ul&gt;</code><span style="border-bottom:0.05em solid"> </span><span style="border-bottom:0.05em solid"><mark class="highlight-teal">and </mark></span><code>&lt;ol&gt;</code> <mark class="highlight-teal">:</mark></h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d26642d8-4b8d-4a29-b741-485b3fe39138"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Nesting of <code>&lt;ul&gt;</code> and <code>&lt;ol&gt;</code> is also allowed to provide a more detailed view.</div></figure><figure id="3dfc8dca-c3ba-4a60-bfa1-905382167ba3" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2012.png"><img style="width:624px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2012.png"/></a></figure><figure id="f4c763fa-e485-4d70-b00a-f6e5f8d3e808" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2013.png"><img style="width:432px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2013.png"/></a></figure><hr id="9141ca2b-ae53-4142-a7c9-7799e19d42ce"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="78da38c1-e1f9-4554-8fc8-46d37fc4b6af"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%">The <strong>Numbering type</strong> in both <code>&lt;ul&gt;</code> and <code>&lt;ol&gt;</code> :</div></figure><figure id="91c3ff73-a56c-4474-b73f-d8e94c72f426" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2014.png"><img style="width:384px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2014.png"/></a></figure><h2 id="9c44270c-0564-4992-be1e-c7f29ec03c93" class=""><mark class="highlight-teal"><span style="border-bottom:0.05em solid">Example:</span></mark></h2><figure id="413f405e-6687-4637-99de-0d67f1b8fe0f" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2015.png"><img style="width:499px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2015.png"/></a></figure><figure id="7db259dc-c1de-40f3-9ffb-a4dd874ff574" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2016.png"><img style="width:336px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2016.png"/></a></figure><hr id="ea44fefc-5b35-430e-991b-5549e1d8b147"/><h1 id="3ea8fbd9-ed42-4fa6-8b99-7cbb771172a6" class=""><code>&lt;img&gt;</code> <span style="border-bottom:0.05em solid"><mark class="highlight-blue">img tag:</mark></span></h1><blockquote id="9bf70add-2cf7-4bca-8b20-1c4cb5a8b1f0" class=""><code>&lt;img&gt;</code> tag is to embed an image inside the web page and it can be sourced from an url or it can also be taken from local directory, it is <code>self closing tag</code></blockquote><p id="b322e006-14ff-44b9-8f73-24c8c6b70acf" class="">
+</p><figure id="5da6365b-8510-424b-bd69-a2af9a1f2ca8" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2017.png"><img style="width:1982px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2017.png"/></a></figure><figure id="68f8ae1a-fbbe-4f74-a471-bf98228699f4" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2018.png"><img style="width:288px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2018.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="77c3e862-3f2a-43f5-a289-ed8c8c6ea018"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><code>src</code> ⇒ is the attribute in which the source of the file is given. [It may be <code>URL</code> or a <code>path</code>]</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b52e1530-dd1e-458f-8133-5fbe498bbfa8"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><code>alt</code> ⇒ is the alternate message to be displayed if the image can’t be fetched.</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c26b0d33-82f4-48f6-9659-b0be4c002d32"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><code>width</code> &amp; <code>height</code> ⇒ It is used to resize the image in the required format.</div></figure><hr id="8d87e54c-ebe0-439c-9fce-822c0532e8e4"/><h1 id="549a8379-5d7a-4f74-93cf-e261cc96ad17" class=""><code>&lt;a&gt;</code> <span style="border-bottom:0.05em solid"><mark class="highlight-blue">Anchor tag:</mark></span></h1><blockquote id="40df4cff-bd66-4dd9-9374-dc49dc9d6bbd" class=""><strong>Anchor tag</strong> is used to add a hyperlink to an other page with the use of <code>href</code> <strong>attribute</strong></blockquote><figure id="a8c1cf68-c037-466c-89cd-35cbd40d1228" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2019.png"><img style="width:912px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2019.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7509f646-c90b-4290-8c27-9b480d226091"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%">Some important thing that we can do with <code>&lt;a&gt;</code> tag</div></figure><figure id="09e3d0bc-a9bb-4de1-b71b-363419aebc8b" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2020.png"><img style="width:2407px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2020.png"/></a></figure><hr id="1a74f19d-5520-4080-ab01-3f3d8fef333a"/><h1 id="e6ede6f8-d565-4779-829f-5594ba759834" class=""><code><span style="border-bottom:0.05em solid"><mark class="highlight-orange"><em>MODULE END OUTCOME:</em></mark></span></code></h1><p id="28f2a4cb-0b33-40d6-b920-117ffd1f63bb" class="">
+</p><figure id="3ecb60fe-cb84-45ce-b451-8ae9ea07da54" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2021.png"><img style="width:2302px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2021.png"/></a></figure><figure id="6699b258-c6a0-4244-862f-96df9aea5c89" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2022.png"><img style="width:1854px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2022.png"/></a></figure><figure id="a800eecd-7313-4105-84bc-9f9257d46b58" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2023.png"><img style="width:624px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2023.png"/></a></figure><figure id="1bb993d6-74d7-4175-9ecb-eac61e0038f3" class="image"><a href="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2024.png"><img style="width:624px" src="1%20Introduction%20to%20HTML%20afddadbb53874aa3ace15ec864e8b971/Untitled%2024.png"/></a></figure><hr id="7407a2cf-c615-4757-ae3c-684df8bd1393"/><p id="f0950da1-7fb6-41e0-94f9-1c69ef0366f9" class="">
+</p></div></article></body></html>

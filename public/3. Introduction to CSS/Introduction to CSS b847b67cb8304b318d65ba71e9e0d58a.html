@@ -1,0 +1,706 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Introduction to CSS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b847b67c-b830-4b31-8d65-ba71e9e0d58a" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">3️⃣</span></div><h1 class="page-title">Introduction to CSS</h1></header><div class="page-body"><p id="4f684a22-e9d7-4d97-b509-57258e6b5987" class="">
+</p><h1 id="2788b91e-2e71-4907-9c15-eb3ded6acc46" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-red">Inline</mark></span><mark class="highlight-red"> </mark><code><mark class="highlight-red">CSS</mark></code><mark class="highlight-red">:</mark></h1><h1 id="c3594b09-7668-43aa-a538-245008013934" class=""><code><mark class="highlight-blue">background-color</mark></code><mark class="highlight-blue">: </mark></h1><p id="ea21e206-76c4-4895-86d4-705770b85dda" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="92a68ced-948a-4a89-8efc-bd514c6bafc9"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">We can’t structure anything with CSS, but it is used to style the structured file like a <code>HTML</code> or an <code>XML</code> file.</div></figure><figure id="c317bc60-47e3-43f1-8d69-656f34ef7985" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled.png"><img style="width:912px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled.png"/></a></figure><figure id="8b41ff29-e89a-4c60-b565-43bfc098ccd7" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%201.png"><img style="width:960px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%201.png"/></a></figure><blockquote id="4988c4a1-ef18-4508-a3ca-532c4b10f865" class="">The <code>style</code> attribute is part of the <code>CSS</code> and the <code>background-color</code> defines the colour of the background as it is going to be applied to the entire page as the <code>&lt;body&gt;</code> tag consists of everything in a website. </blockquote><blockquote id="3a241dcf-024e-4add-8158-fdb218a484fd" class="">There is probably a ton of different ways that we can do that, using a <code>hexadecimal</code> value (or) <mark class="highlight-yellow_background"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value"><code>color</code></a></mark> names mentioned in the <code>mdn</code> site.</blockquote><p id="e83cdcc4-1914-492c-a062-62a79b13bd79" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="bd38ea0d-7da5-46ba-bffc-801d42d26019"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%">The <code>style</code> attribute should be the place where the <code>CSS</code> code goes right in.</div></figure><hr id="10c6aa32-18b0-4b72-a48b-085fab19d237"/><h2 id="092454c5-c4bb-465f-bbc4-974334d8d698" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-teal">Syntax of </mark></span><code>background-color</code>:</h2><figure id="b3224d3f-02be-478c-ad28-46e3bf6f4e0b" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%202.png"><img style="width:672px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%202.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="63c8f153-490b-45fc-a16a-585abc062708"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%">Refer : <strong><mark class="highlight-orange"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">https://developer.mozilla.org/en-US/docs/Web/CSS/background-color</a></mark></strong><strong><mark class="highlight-orange"> &amp; </mark></strong><a href="http://colorhunt.co"><strong><mark class="highlight-orange">colorhunt.co</mark></strong></a></div></figure><hr id="902aee61-d5e9-499a-bb18-ecf8d3d920a3"/><h1 id="1dbb429d-461e-43b7-a8f6-ed61f903c3eb" class=""><mark class="highlight-red"><span style="border-bottom:0.05em solid">Internal</span></mark> <code>CSS</code><mark class="highlight-blue">:</mark></h1><p id="b30badb3-408c-47e9-b614-3c33baab7ffc" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f905ee37-3221-47cc-b48b-9eafe3d8da3b"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">If we want to change the style of the entire page that contains a particular tag i.e: <code>&lt;hr&gt;</code> and <code>&lt;body&gt;</code> as we couldn’t change the style of all the <code>&lt;hr&gt;</code> tag. The <code>style</code> tag can be clubbed inside the <code>&lt;head&gt;</code> block.</div></figure><figure id="04b8d036-8230-483a-828a-8adc618370f9" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%203.png"><img style="width:672px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%203.png"/></a></figure><blockquote id="bb05f36d-5b0b-4cb3-8609-3ed9d15ca187" class="">The code’s output looks exactly same as the above one</blockquote><figure id="2b19831d-9a98-4b26-97ab-5d77bc21747e" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%204.png"><img style="width:672px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%204.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="34e0970d-4003-4921-b516-c41247ffecc0"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">The above code doesn’t have any <code>&lt;hr&gt;</code> as the basic <code>hr CSS</code> block is given inside every page, then the basic block of <code>hr</code> block</div></figure><figure id="3e4873e1-aa29-41a9-9103-1ebd480f353b" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%205.png"><img style="width:768px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%205.png"/></a></figure><hr id="4c225939-f738-4fd9-8df5-89edafb0aa0a"/><p id="7c4462f9-edb5-409b-a142-a642ac49dbd3" class="">
+</p><h2 id="77803f99-e64a-4fb5-b86e-b08552572b6f" class=""><mark class="highlight-teal"><span style="border-bottom:0.05em solid">The default hr</span></mark> <code>CSS</code> <span style="border-bottom:0.05em solid"><mark class="highlight-teal">block:</mark></span></h2><p id="c155aca1-9c07-48b1-b2a8-9733a197d50c" class="">
+</p><figure id="b7c93113-66dd-4aac-ac8e-96f9e8dac15f" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%206.png"><img style="width:2073px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%206.png"/></a></figure><blockquote id="47605f18-ff07-4a66-a2dd-024a8a771bc0" class="">The default block looks something like this, and that’s the reason for the absence of the <code>&lt;hr&gt;</code> tag.</blockquote><div id="9a1c952d-fccf-4d12-8d00-3968dfce4750" class="column-list"><div id="0b472490-f4df-418c-8c58-4a9107ae55f0" style="width:50%" class="column"><figure id="ff4d7950-810d-413e-bbe3-55148dec911a" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%207.png"><img style="width:432px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%207.png"/></a></figure></div><div id="8a7e1875-5a83-44ee-8a8c-0762fa759f10" style="width:50%" class="column"><figure id="233305f7-c3c9-4ce3-a99e-21fff669d731" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%208.png"><img style="width:480px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%208.png"/></a></figure></div></div><hr id="26c8ed0c-9490-403a-9f36-208929bd61ee"/><h2 id="393254ac-e4d2-4dd6-9dda-d288781ddd1d" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-teal">The</mark></span><mark class="highlight-teal"> </mark><code><mark class="highlight-teal">CSS</mark></code><mark class="highlight-teal"> </mark><span style="border-bottom:0.05em solid"><mark class="highlight-teal">basics:</mark></span></h2><p id="d16df276-31e3-4f59-adad-816b75dbb052" class="">
+</p><figure id="7d665b64-d707-4408-a1c4-2b5e5a7dadd2" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%209.png"><img style="width:816px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%209.png"/></a><figcaption>“<strong>Everything in the </strong><strong><code>CSS</code></strong><strong> will look like a rectangle and the reason we didn’t get anything in the output is that, the </strong><strong><code>height</code></strong><strong> is set to </strong><strong><code>0px</code></strong><strong> ”</strong></figcaption></figure><figure id="3eb5e0fa-cac4-4882-98ef-fd71527500ab" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2010.png"><img style="width:720px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2010.png"/></a></figure><figure id="6ac1e372-6dcc-4ae3-8407-1ca1cb449817" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2011.png"><img style="width:672px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2011.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="646b5b20-8da2-426b-933e-1158d4530d1a"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">It also applies for almost everting including <code>&lt;img&gt;</code> tag.</div></figure><div id="dd62640f-f3a4-4372-9e4e-7842ecf58d0c" class="column-list"><div id="86d3b5af-1b25-4c98-9197-93c94ac37a33" style="width:43.75%" class="column"><figure id="063b4a14-a1fd-4d80-acdd-f462ad1e84b2" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2012.png"><img style="width:460px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2012.png"/></a></figure></div><div id="788a2da5-46e8-4b97-95b8-f9d821a269aa" style="width:56.25%" class="column"><figure id="4eb00b16-c5e4-4e8e-94ee-efc693195789" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2013.png"><img style="width:1217px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2013.png"/></a></figure></div></div><hr id="91a79ed7-fb7b-4047-9ccf-05ee4643e3b1"/><div id="3b483146-f604-455d-88a4-dee6c1bf0e02" class="column-list"><div id="ab62ee5b-e53a-4533-9730-da4d79ed8ea6" style="width:93.75%" class="column"><div id="a8230f00-6ca8-4ddd-9640-81e2fa0da5f0" class="column-list"><div id="99e5057e-aeca-4183-8f25-4bbb9a12570b" style="width:100%" class="column"><figure id="26f9b213-e56b-47d0-8b3f-33d8d55d0ea8" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2014.png"><img style="width:745px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2014.png"/></a></figure></div><div id="f27326ff-e7f9-4ed9-8a42-a285e51a77de" style="width:100%" class="column"><figure id="20285c9f-c2ba-4e09-acc2-34ad18030f1e" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2015.png"><img style="width:3171px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2015.png"/></a></figure></div></div></div><div id="0cd0635a-7ada-4728-9fcc-f94b60664f92" style="width:6.25%" class="column"><p id="95129c9f-cc4a-48d9-b772-b7bcba36bf6d" class="">
+</p></div></div><blockquote id="d0555cc3-63e0-4f90-befe-1fbf97b71065" class="">Observe that the <code>width</code> of the hr tag get a lot smaller after it has been assigned a value.</blockquote><p id="69632f29-1c4b-4e2d-82c7-bdc7486102dd" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a6d91d92-c35c-4882-996f-024f00ebb471"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">But, what if the website is opened in desktop, i-pad, tablet or any other different devices, then the width will remain the same even if the device gets changed, so we can define them in terms of <code>percentage</code> to dynamically change its size according to the height and width of the device in which it is viewed.</div></figure><p id="71c3d469-3ea3-4b20-9ead-0a79d3cc289e" class="">
+</p><figure id="d4f9aa3d-7046-4016-b39f-c6d5f1426122" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2016.png"><img style="width:672px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2016.png"/></a></figure><hr id="e7fd7520-1a0a-4877-844c-be728c80c105"/><h1 id="92c97a7a-505d-4c74-8198-45230f51196a" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Syntax for</span></mark> <code>border-style</code>:</h1><div id="73d218de-91be-4048-9fcd-e994f069f012" class="column-list"><div id="21548f4a-8495-4b21-941a-f176a0b158f0" style="width:50%" class="column"><figure id="27f27dc3-918f-49dc-8ab5-4e5dd44bc6da" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2017.png"><img style="width:528px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2017.png"/></a></figure></div><div id="db942b58-ab52-4cfe-9b95-af40382d97bb" style="width:50%" class="column"><figure id="6414f505-6557-489f-8e49-a1f526aee172" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2018.png"><img style="width:384px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2018.png"/></a></figure></div></div><figure id="f372f7e7-809d-4f57-aba1-40c2c75be79e" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2019.png"><img style="width:864px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2019.png"/></a></figure><div id="1bcabad5-19b2-40d3-91f5-043267428acb" class="column-list"><div id="4616002a-aee3-45fd-a9a4-9cf9062d9269" style="width:50%" class="column"><figure id="0e2ccc46-a511-48a6-bbc6-78e82ef1d562" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2020.png"><img style="width:480px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2020.png"/></a></figure><p id="6479a53d-8507-463c-add7-3f52915ba618" class="">
+</p></div><div id="5cd40a28-1638-4d3e-a339-e7d8cfdb6d7f" style="width:50%" class="column"><p id="dcca652d-efdc-437b-bc05-670ca7395a7a" class="">
+</p><p id="7fca1ca0-1dc8-40ae-baf5-d98933846f10" class="">
+</p><figure id="afe3b61f-2d4a-48f5-8623-1fd029dc6baa" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2021.png"><img style="width:1119px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2021.png"/></a></figure><p id="1c41d686-6342-4a83-8bae-76c4f493db63" class="">
+</p></div></div><hr id="60b6cb80-8aa2-471c-b200-0c4b800e372f"/><div id="3c07b946-5119-4a64-a1ff-4e6a6326966a" class="column-list"><div id="ec2eba7e-46e9-4fc0-a855-847921014926" style="width:50%" class="column"><figure id="7d55edfd-c323-4226-8a86-90b948720737" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2022.png"><img style="width:742px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2022.png"/></a></figure></div><div id="94dbb2cf-cab8-4f8d-a0a7-ec95c87987ec" style="width:50%" class="column"><p id="1549d75c-e0f0-4483-89f3-006847e5bc9a" class="">
+</p><p id="aeea5e18-6447-4690-be5e-18b75cab1a28" class="">
+</p><figure id="f433773f-1ae0-41f0-a170-7371dad2d357" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2023.png"><img style="width:423px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2023.png"/></a></figure><p id="bbe86c13-2986-4f41-bd1e-191d98568989" class="">
+</p></div></div><hr id="0db27a90-e26a-4c3f-8788-6b68103e6358"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="444a9f91-93a8-4c87-b1bf-4df3b0146f9b"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">These changes should be consistent throughout all our pages, but that is not going to happen here, as we are typing the <code>style</code> tag inside the <code>&lt;head&gt;</code> tag we should copy it entirely into all the pages to get that consistency which makes it more irritating.😤😡 The solution is to go for a global styling file through which all the pages can access the styles fixed which is known as <code>External CSS</code> </div></figure><hr id="ff3bb1f9-779b-4b17-aa2c-92359ab842d7"/><h1 id="296aad42-c312-4d7c-b1de-c4f65bf98a68" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-red">External</mark></span> <code>CSS</code><mark class="highlight-red">:</mark></h1><p id="1aa7f6c7-2873-4809-9885-d219ab6081ba" class="">
+</p><div id="05c62c33-595b-4548-ac1d-157af4f2bcdc" class="column-list"><div id="e09a02c2-3978-43d3-8a05-99a542b93d2a" style="width:50%" class="column"><figure id="407b51b9-95dc-4a33-8fa7-cebc496fbe6b" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2024.png"><img style="width:624px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2024.png"/></a></figure></div><div id="bf1ddc39-6b09-4454-ac13-ed9b75ed334c" style="width:50%" class="column"><p id="abf0639d-9cdf-4d43-98e8-a614eb765ad5" class="">
+</p><figure id="0fe9d7f6-56bf-4b2f-9154-3d20c25759e9" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2025.png"><img style="width:1123px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2025.png"/></a></figure><figure id="4a5c1b5b-78fb-4399-995b-692a27099a13" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2026.png"><img style="width:1108px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2026.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="df1cad36-d915-4f69-8814-698d5473c126"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Create a new folder <code>CSS</code> in which add a file as <code>styles.css</code> and use the link element to link the pages that need to get the style as mentioned in the <code>styles.css</code> file.</div></figure><div id="ca02657d-55fa-4041-8e73-80d7d01306fa" class="column-list"><div id="e2ca4c9b-8d62-4f88-9bcc-3e42bf2b8b99" style="width:43.75%" class="column"><figure id="a3651232-fb5f-41e0-98a5-4b2b4e883eb8" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2027.png"><img style="width:432px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2027.png"/></a></figure></div><div id="acfe546f-e33c-4131-b344-2a4ab5e0e34f" style="width:56.25%" class="column"><p id="a6e284ef-b7e1-4352-8125-6d1d724c897e" class="">
+</p><p id="82296527-30ac-4efb-aece-a200c5396cdd" class="">
+</p><p id="cfc89fc1-667e-4c6a-8ef7-0c69de2d2f2b" class="">
+</p><figure id="df1c9013-3bf7-4348-b1c4-2a2a519f3bc4" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2028.png"><img style="width:3141px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2028.png"/></a></figure></div></div><hr id="850bbd1c-2400-4e63-ab22-20fa852cf5f7"/><h1 id="70299042-db96-477f-92d2-11aff1fd83c9" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-blue">Debugging a CSS code:</mark></span></h1><h2 id="dade36e5-a027-4043-919f-014a33b1bde1" class=""><mark class="highlight-teal"><span style="border-bottom:0.05em solid">Problem - 1:</span></mark></h2><p id="46797445-fd9f-46e8-8bce-34018a579e75" class="">
+</p><div id="a674682d-a37d-4ce8-ab83-9f55394da6be" class="column-list"><div id="1c8e9aa7-8eab-44fb-90cb-35e0f3a03976" style="width:50%" class="column"><figure id="4ce20375-eac5-4d3c-b7ae-c96a95d1da58" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2029.png"><img style="width:480px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2029.png"/></a></figure><p id="cbfee4e0-252d-4b48-8f64-e26fc77ea206" class=""><strong>The page lost its style</strong></p></div><div id="6ead4e53-f2c3-427f-8ec1-ea594659544c" style="width:50%" class="column"><figure id="1fa783e5-42cd-4712-9eba-9886df699730" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2030.png"><img style="width:3200px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2030.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0a9185e1-d11d-45f2-ac12-e56894f4ab97"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">The code is buggy in the <code>link</code> element as the <code>href = “/css/styles.css”</code> , since we are locally working with the website, it will not have root which is the <code>forward slash /</code> before css folder, therefore we need to remove the first forward slash. </div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f75c5c76-4af9-448d-9ae3-ad6275ad456f"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%">These type of debugging can be done with the help of <code>chrome developer tools</code> by going into</div></figure><figure id="1c381589-bcb5-43f4-ac75-3242c2a7413b" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2031.png"><img style="width:480px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2031.png"/></a></figure><figure id="c8fd1ec1-f324-463b-aa89-317fa2199500" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2032.png"><img style="width:3200px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2032.png"/></a><figcaption>                                                                           “<strong>The error clearly shows that it failed to load resources </strong><code><strong>ERR_FILE_NOT_FOUND</strong></code><strong> ”</strong></figcaption></figure><hr id="da24ac3e-de5b-4f2d-bed4-c348f179784d"/><h2 id="4f7a1242-4ae5-4f36-89c9-507ff29e52ce" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-teal">Problem - 2:</mark></span></h2><p id="1377f4ce-d11f-4bc8-ac1e-587e8b042a14" class="">
+</p><div id="12e8c0a7-648c-4717-8df7-d796cfba1cad" class="column-list"><div id="659f9f44-19d9-4642-ac8c-5ccb87b2ce86" style="width:62.5%" class="column"><figure id="14b0d9ec-5d7c-4103-afb5-026f91db5e39" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2033.png"><img style="width:2018px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2033.png"/></a></figure></div><div id="ed567677-5e30-4314-918a-58f2ab97be5e" style="width:37.50000000000001%" class="column"><figure id="7845c72c-c568-45d3-8fb4-2d7d5b7ef605" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2034.png"><img style="width:2925px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2034.png"/></a></figure></div></div><blockquote id="07fe3b67-f28e-4b0d-a60b-a2d2f2d5f971" class="">The background is now white even though we specified our own colour in the <code>styles.css</code> </blockquote><p id="646ef2ee-d8c8-48f3-8607-8517da09d0c2" class=""> </p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="49a5ef30-6e4a-400d-a34b-7f9dccecd184"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%">The reason is that, there is an <code>inline CSS</code> code written in the body tag. To rectify this we need to remove the inline CSS code in the body tag.</div></figure><figure id="bd08492e-4f0d-4d01-b8d9-fbcb930be8f7" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2035.png"><img style="width:3199px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2035.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1d1895dc-2279-41aa-8c95-b816d6c91903"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%">See that the <code>External CSS</code> is stroked out in the styles. To understand this in a more deeper way, we need to understand the Priorities of all types of CSS code over others. </div></figure><figure id="94816edf-e57b-4531-b5bd-432dc63590b3" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2036.png"><img style="width:3196px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2036.png"/></a></figure><p id="36964514-2255-4728-a3e7-0628919e9a8f" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1d1ee18f-2ff7-462f-8f0f-28e3463834b1"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><span style="border-bottom:0.05em solid"><strong>Priority:</strong></span><strong> </strong><code>Inline css</code> &gt; <code>Internal CSS</code> &gt; <code>External CSS</code><strong> </strong></div></figure><hr id="f5ff6b84-6415-4358-827e-b09340daa5be"/><h1 id="d5c9d96e-fb9d-48e3-9e78-3e1587f0a281" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">Syntax of CSS:</span></mark></h1><figure id="89d0708a-1e1c-4b56-a882-108b6d846a96" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2037.png"><img style="width:768px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2037.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e325ca83-0b97-44cd-9e8c-1d86fc981771"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">To know changing which one will change what appearance of the website by just going into the reference link given below and understand more on that ⇒ <mark class="highlight-orange"><strong><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">https://developer.mozilla.org/en-US/docs/Web/CSS/Reference</a></strong></mark></div></figure><hr id="2459d315-8a9c-487e-80d7-e9268d50da4e"/><h1 id="fb268d69-eac4-492e-bd96-137af80f93a3" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid">CSS Selectors:</span></mark></h1><p id="c549f5b4-c7fe-48dc-92ed-4c2c1cd69619" class="">
+</p><div id="66adc0d1-d974-4be5-96bd-e7f06eda6b36" class="column-list"><div id="6062e9aa-2107-4dd3-b6f6-255b2aca8bb7" style="width:62.5%" class="column"><figure id="49c63a66-c40f-4115-91aa-c1d690c6b7f8" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2038.png"><img style="width:576px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2038.png"/></a></figure></div><div id="cb451905-5a4f-4af3-85a3-aba035dc7858" style="width:37.5%" class="column"><figure id="da99f681-cac3-41e8-b4c6-5c252a222aee" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2039.png"><img style="width:927px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2039.png"/></a></figure></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2a26ff1a-40b7-4024-ab79-6ceab5f423e6"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">As the Selector <code>img</code> is used, it will be applied to the entire website’s <code>img</code> elements as it is using <mark class="highlight-yellow"><code><strong>Tag selectors</strong></code></mark>. What if we need to be specific for specific images, that’s where <mark class="highlight-yellow"><code><strong>Class selectors</strong></code></mark> comes into picture.</div></figure><hr id="c075883b-641f-4ff4-ba5d-ee6192e97614"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="01a6eeb9-bb1c-4bce-8e0a-5fa6242a8532"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%">We can create a class name for every particular elements that we are using and select it with <code>class selectors</code></div></figure><div id="1bf89c95-adaf-4795-853b-7b74a9eaa4c3" class="column-list"><div id="bef35b3d-acb5-4d49-88dc-88db159eacbf" style="width:31.25%" class="column"><figure id="b431515b-43af-4d25-b194-33e429047af3" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2040.png"><img style="width:576px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2040.png"/></a></figure></div><div id="b56a1edb-3455-4bc2-bbcb-9984e5987d2f" style="width:68.75%" class="column"><figure id="a4989775-3f02-42c5-9341-dbfd5fac7a1f" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2041.png"><img style="width:2100px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2041.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5832eb6f-1f99-43c8-bb01-e78324bd9a3f"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%">We have added a class attribute to the <code>img</code> tag, and the syntax for using <mark class="highlight-yellow"><code><strong>class selectors</strong></code></mark><mark class="highlight-yellow"><strong> </strong></mark>is by simply adding a <code><strong>.</strong></code><strong> before the class name.</strong></div></figure></div></div><figure id="17e086a9-5b9d-4e7b-8a37-6aa4a5ddf90f" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2042.png"><img style="width:576px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2042.png"/></a></figure><hr id="026777ca-501f-40a4-a6c2-66c4a31b4917"/><h2 id="c2161ed5-e10c-41fc-8186-5160d566609c" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-teal">id Selectors:</mark></span></h2><p id="25b4e98e-cfce-43fc-8ff7-4be8907e515e" class="">
+</p><blockquote id="a5896f72-e10d-4ca2-8562-0f4020bbd10d" class="">The <mark class="highlight-yellow"><strong><code>id selectors</code></strong></mark><mark class="highlight-yellow"><strong> </strong></mark>are specifically used to style a particular element of the page like <code>&lt;h1&gt;</code> , The syntax is to add a <code>#</code> before  the id name to create block. <strong>Least used</strong></blockquote><div id="bd5b31b5-2512-4b55-be4c-14c486ce1ecf" class="column-list"><div id="b96d1aa8-2dc7-47b4-b897-19198d78462f" style="width:50%" class="column"><figure id="dab67103-34e8-47e5-9377-6e7773b367f0" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2043.png"><img style="width:288px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2043.png"/></a></figure></div><div id="826e4e5f-e617-47c2-b376-48e8080f00fa" style="width:50%" class="column"><p id="9cb90c2c-bba4-44e1-a3d1-10b8b42c4808" class="">
+</p><blockquote id="57bf6600-be26-48a2-b5e2-ec8897af0f31" class=""><span style="border-bottom:0.05em solid"><strong>Analogy:</strong></span> <code>id</code> is like <strong>passport </strong>and <code>class</code> is like <strong>name</strong></blockquote></div></div><p id="ed93a52d-4a16-45a6-8ef1-3d32f23fa182" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="035c6b48-4c4e-4e5c-8b38-aac6607c3d4e"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%"><strong>Can’t have the same </strong><code><strong>id name</strong></code><strong> for more than one elements.</strong></div></figure><figure id="0c1aa529-4527-4c89-a907-74105ebd7f2f" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2044.png"><img style="width:1659px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2044.png"/></a></figure><p id="50e9a676-5612-4310-a250-0859e0da3e41" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ebe05973-d8da-430e-81a5-b775cd7998fe"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%"><strong>Can have same </strong><strong><code>class name</code></strong><strong> for all the elements that need to share the same style</strong></div></figure><figure id="31a69bcf-324c-4d6d-989a-6ca813bdcc5d" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2045.png"><img style="width:1558px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2045.png"/></a></figure><p id="a28d3b81-f47c-48c7-bd43-3a4449f7d0a2" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4c95d094-55f0-4a76-b9f7-0f029897ed3f"><div style="font-size:1.5em"><span class="icon">🚨</span></div><div style="width:100%">An element can have more than one <code>class name</code> but it can’t have more than one <code>id name</code> </div></figure><figure id="a80e69ac-a8c3-475c-81d1-52d8298d517e" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2046.png"><img style="width:1732px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2046.png"/></a><figcaption>                                                <strong><span style="border-bottom:0.05em solid">HERE</span></strong>:  The <code>broccoli</code> and <code>circular</code> are two different class names which can define different thing</figcaption></figure><p id="b4804612-65c9-40d7-81fa-15e3c071ae81" class="">
+</p><div id="1901a63a-28fe-4b00-be64-66884ba79202" class="column-list"><div id="38875cd0-f47b-4c95-9ab9-c8887ac93487" style="width:43.75%" class="column"><figure id="7737977f-78e1-472e-a084-69e052b595f4" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2047.png"><img style="width:384px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2047.png"/></a></figure></div><div id="6db482be-9153-4d15-b19a-7f61f9a4d32c" style="width:56.25%" class="column"><figure id="f899c3d7-0681-4888-8db5-f4af9198af21" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2048.png"><img style="width:742px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2048.png"/></a></figure><blockquote id="957bf4e4-6ced-4d0d-81fd-ed25d29fe9ac" class="">The broccoli alone gets circular along with having a background colour as red.</blockquote></div></div><p id="29a909a3-f434-4e2c-8b23-4df726935842" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a2255ddf-96f5-43f6-bfce-6b6c3b4a0d84"><div style="font-size:1.5em"><span class="icon">3️⃣</span></div><div style="width:100%"><strong>We can’t actually two different id name to a same element as well</strong></div></figure><figure id="831b9b07-b369-4247-85be-2643436effed" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2049.png"><img style="width:960px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2049.png"/></a></figure><p id="f55584cf-a745-4e83-abc7-a09e30bf960c" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a1e62e82-7d0a-4379-82d4-514f8d40c801"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><span style="border-bottom:0.05em solid"><strong>Priority:</strong></span><strong>  (</strong><mark class="highlight-yellow"><code><strong>id selectors</strong></code></mark><strong> and </strong><strong><mark class="highlight-yellow"><code>class selectors</code></mark></strong><strong>) &gt; </strong><mark class="highlight-yellow"><code><strong>tag selectors</strong></code></mark><strong> </strong></div></figure><hr id="825d00e3-dbcb-474c-9f55-c78733bb130f"/><h1 id="d481a756-ad12-45ae-9be4-7cb466d0631a" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-blue">Pseudo classes:</mark></span></h1><p id="ad3c4b1f-b744-492a-9556-b87c63852ec7" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4f5c7620-869f-453d-8f8e-98954a9f5d0b"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">These classes are used to make difference if there is change in the state of the element like hovering through the mouse pointer. All hover classes will have a <code><strong>:</strong></code><strong> </strong>in front of it. Mostly used pseudo class is <mark class="highlight-yellow"><code><strong>:hover</strong></code></mark></div></figure><figure id="1418f8d9-bb97-442d-89b5-f9a994e71a53" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2050.png"><img style="width:768px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2050.png"/></a></figure><p id="cd9ffead-525e-4f57-a310-6b8e9d316f3d" class="">
+</p><div id="a54125ca-2064-4b58-95b7-0bc7ba473b56" class="column-list"><div id="0bf31a67-451e-47a8-88b0-469bbe9a0e34" style="width:58.33333333333333%" class="column"><figure id="b1c23c19-c8d3-4ce4-a4b1-c0f936a565bb" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2051.png"><img style="width:724px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2051.png"/></a></figure></div><div id="ec9c41a4-0d06-4227-b391-ee1b8e778c6f" style="width:16.66666666666667%" class="column"><figure id="15f59228-b847-49b6-a04d-802b967d22a2" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2052.png"><img style="width:144px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2052.png"/></a></figure></div><div id="1d1ebdc6-d784-4b7f-811a-d2b7a8a2bf32" style="width:24.999999999999993%" class="column"><figure id="ede1e5cc-643e-480b-a5a8-7c24c22c7c03" class="image"><a href="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2053.png"><img style="width:132px" src="Introduction%20to%20CSS%20b847b67cb8304b318d65ba71e9e0d58a/Untitled%2053.png"/></a></figure></div></div><hr id="b2579b33-0757-499d-ad62-763c4eb39539"/><p id="cf3eccfa-bd2e-433a-83ba-0da7c2ec2649" class="">
+</p></div></article></body></html>
